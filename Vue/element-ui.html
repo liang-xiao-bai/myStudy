@@ -1,0 +1,1800 @@
+<include file="public@header"/>
+<script src="__STATIC__/js/vue.js"></script>
+<link href="__STATIC__/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+<script src="__STATIC__/element-ui/lib/index.js"></script>
+<script src="__STATIC__/js/axios.min.js"></script>
+<link href="__TMPL__/public/assets/css/theme/design.css" rel="stylesheet">
+<!-- import Sortable.min.js -->
+<script src="__STATIC__/js/Sortable.min.js"></script>
+</head>
+<body>
+<div class="parent">
+    <div class="head">
+        <div class="div1">
+            <span id='back'>退出装修</span>
+        </div>
+        <div class="div2">
+            <img class="img2 pc_edit" src="__TMPL__/public/assets/images/pc.png" alt="">
+            <img class="img1 mobile_active pc_edit" src="__TMPL__/public/assets/images/mobile_dark.png" alt="">
+
+            <img class="img2 pc_active mobile_edit" src="__TMPL__/public/assets/images/pc_dark.png" alt="">
+            <img class="img1 mobile_edit" src="__TMPL__/public/assets/images/mobile.png" alt="">
+            <!-- <img class="img3" src="__TMPL__/public/assets/images/open.png" alt=""> -->
+            <!-- <img class="img3" src="__TMPL__/public/assets/images/open_dark.png" alt=""> -->
+        </div>
+        <div class="div3">
+            <select name="" id="" class="pagesOption">
+                <option value="0">请选择</option>
+            </select>
+            <span id='preview'>预览</span>
+            <span style="background-color: #2F90FF;color: #FFFFFF;" id="post_btn">发布</span>
+        </div>
+    </div>
+    <div  class="main">
+        <div class="menu" id='menu' v-show='preview_flag'>
+            <div class="list" v-show='!module_falg&&!edit_falg'>
+                <div class="tabs">
+                    <div class="items active">
+                        <img src="__TMPL__/public/assets/images/list.png" alt="">
+                        <span>模块列表</span>
+                    </div>
+                    <div class="items" @click='editGlobal("global")'>
+                        <img src="__TMPL__/public/assets/images/set.png" alt="">
+                        <span>全局设置</span>
+                    </div>
+                </div>
+                <!-- 页头 -->
+                <div class="item hover_item" style="border-bottom: 0;" v-show='optionId !== selectId'>
+                    <div class="operation">
+                        自定义页面
+                        <div class="operat_icon">
+                            <img src="__TMPL__/public/assets/images/edit.png" alt="" @click='edit("self")'>
+                        </div>
+                    </div>
+                </div>
+                <!-- 页头 -->
+                <div class="item hover_item" style="border-bottom: 0;" v-show='optionId === selectId'>
+                    <div class="operation">
+                        页头
+                        <div class="operat_icon">
+                            <img src="__TMPL__/public/assets/images/edit.png" alt="" @click='edit("header")'>
+                        </div>
+                    </div>
+                </div>
+                <!-- 模块列表 -->
+                <el-table :data="module"
+                    border
+                    :key="itemKey"
+                    align="left"
+                    @cell-click='table_select($event)'
+                    :show-header="showHeader"
+                    v-show='module.length'
+                    >
+                    <el-table-column>
+                        <template slot-scope="scope">
+                            <div class="operation">
+                                {{ scope.row.zh_name }}
+                                <div class="operat_icon">
+                                    <img src="__TMPL__/public/assets/images/edit.png" alt="" @click='edit(scope)'>
+                                    <img src="__TMPL__/public/assets/images/delete.png" alt="" @click='move(scope)'>
+                                </div>
+                            </div>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <div class="item add_item" @click='add_modules'>
+                    +添加模块
+                </div>
+                <div class="item hover_item" v-show='optionId === selectId'>
+                    <div class="operation">
+                        页尾
+                        <div class="operat_icon">
+                            <img src="__TMPL__/public/assets/images/edit.png" alt="" @click='edit("footer")'>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 添加模块 -->
+            <div class="module" v-show='module_falg'>
+                <div class="back" @click='back'>添加模块</div>
+                <div class="select_box">
+                    <p>图文模块</p>
+                    <ul>
+                        <li @click='add("banner")'>
+                            <img src="__TMPL__/public/assets/images/lunbotu.png" alt="">
+                            <p>轮播图</p>
+                        </li>
+                        <li @click='add("bannerS")'>
+                            <img src="__TMPL__/public/assets/images/lunbotu.png" alt="">
+                            <p>轮播图2</p>
+                        </li>
+                        <li @click='add("bannerT")'>
+                            <img src="__TMPL__/public/assets/images/lunbotu.png" alt="">
+                            <p>轮播图3</p>
+                        </li>
+                        <li @click='add("leftImg")'>
+                            <img src="__TMPL__/public/assets/images/tuwen1.png" alt="">
+                            <p>图文陈列1</p>
+                        </li>
+                        <li @click='add("rightImg")'>
+                            <img src="__TMPL__/public/assets/images/tuwen2.png" alt="">
+                            <p>图文陈列2</p>
+                        </li>
+                        <li @click='add("smallBanner")'>
+                            <img src="__TMPL__/public/assets/images/tuwen2.png" alt="">
+                            <p>图文陈列3</p>
+                        </li>
+                        <li @click='add("smallBannerS")'>
+                            <img src="__TMPL__/public/assets/images/tuwen2.png" alt="">
+                            <p>图文陈列4</p>
+                        </li>
+                        <li @click='add("smallBannerT")'>
+                            <img src="__TMPL__/public/assets/images/tuwen2.png" alt="">
+                            <p>图文陈列5</p>
+                        </li>
+                        <li @click='add("mySwiper")'>
+                            <img src="__TMPL__/public/assets/images/tuwen2.png" alt="">
+                            <p>多小轮播图</p>
+                        </li>
+                        <li @click='add("newSwiper")'>
+                            <img src="__TMPL__/public/assets/images/tuwen2.png" alt="">
+                            <p>多小轮播图2</p>
+                        </li>
+                    </ul>
+                    <p>产品模块</p>
+                    <ul>
+                        <li @click='add("storeList")'>
+                            <img src="__TMPL__/public/assets/images/store.png" alt="">
+                            <p>商品</p>
+                        </li>
+                        <li @click='add("storeListAll")'>
+                            <img src="__TMPL__/public/assets/images/store.png" alt="">
+                            <p>商品2</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- banner模块 -->
+            <div class="banner" v-show='module_name === "banner" || module_name === "mySwiper" || module_name === "newSwiper"'>
+                <div class="back" @click='back'>轮播海报</div>
+                <div class="banner_box">
+                    <p class="p_head" v-show='module_name === "mySwiper" || module_name === "newSwiper"'>标题</p>
+                    <div class="swiper" v-show='module_name === "mySwiper" || module_name === "newSwiper"'>
+                        <el-input v-model="banner_list[0].title" placeholder="模块标题"></el-input>
+                    </div>
+                    <p class="p_head">海报</p>
+                    <el-collapse accordion v-model="activeName">
+                        <el-collapse-item :name="index" v-for='(item,index) in banner_list' :key='index'>
+                          <template slot="title">
+                           <div class="left">
+                                <img src="__TMPL__/public/assets/images/dian.png" alt="">
+                                <img src="__TMPL__/public/assets/images/add_png.png" alt="">
+                                <span>图片{{index+1}}</span>
+                           </div>
+                          </template>
+                          <div class="content">
+                                <p class="tip" v-show='module_name === "banner"'>建议上传1920*690px规格的图片</p>
+                                <p class="tip" v-show='module_name === "mySwiper"'>建议上传280*280px规格的图片</p>
+                                <p class="tip" v-show='module_name === "newSwiper"'>建议上传320*410px规格的图片</p>
+                                <div class="up_img" :class='item.img_url?"hidden_add":""'>
+                                    <el-upload
+                                        action="/mall/admin_item/imageUp"
+                                        list-type="picture-card"
+                                        :headers='header'
+                                        :file-list="item.fileList"
+                                        :on-success="handleAvatarSuccess"
+                                        :on-preview="handlePictureCardPreview"
+                                        :on-remove="handleRemove">
+                                        <i class="el-icon-plus"></i>
+                                    </el-upload>
+                                    <el-dialog :visible.sync="dialogVisible">
+                                        <img width="100%" :src="item.img_url" alt="">
+                                    </el-dialog>
+                                </div>
+                                <div class="title">
+                                    <span>链接</span>
+                                </div>
+                                <textarea v-model='item.url'>
+
+                                </textarea>
+                                <p class="operation">
+                                    <!-- <span>上移</span> -->
+                                    <span @click='delete_banner(index)'>删除模块</span>
+                                </p>
+                          </div>
+                        </el-collapse-item>
+                    </el-collapse>
+                    <p class="add_img" @click='add_item'>
+                        +添加图片
+                    </p>
+                </div>
+            </div>
+            <div class="banner" v-show='module_name === "bannerS" || module_name === "bannerT"'>
+                <div class="back" @click='back'>轮播海报</div>
+                <div class="banner_box">
+                    <p class="p_head">海报</p>
+                    <el-collapse accordion v-model="activeName">
+                        <el-collapse-item :name="index" v-for='(item,index) in banner_list2' :key='index'>
+                          <template slot="title">
+                           <div class="left">
+                                <img src="__TMPL__/public/assets/images/dian.png" alt="">
+                                <img src="__TMPL__/public/assets/images/add_png.png" alt="">
+                                <span>图片{{index+1}}</span>
+                           </div>
+                          </template>
+                          <div class="content">
+                                <p class="tip" v-show='module_name === "bannerS"'>建议上传1920*850px规格的图片（pc端）</p>
+                                <p class="tip" v-show='module_name === "bannerT"'>建议上传1920*650px规格的图片（pc端）</p>
+                                <div class="up_img" :class='item.img_url?"hidden_add":""'>
+                                    <el-upload
+                                        action="/mall/admin_item/imageUp"
+                                        list-type="picture-card"
+                                        :headers='header'
+                                        :file-list="item.fileList"
+                                        :on-success="handleAvatarSuccess"
+                                        :on-preview="handlePictureCardPreview"
+                                        :on-remove="handleRemove">
+                                        <i class="el-icon-plus"></i>
+                                    </el-upload>
+                                    <el-dialog :visible.sync="dialogVisible">
+                                        <img width="100%" :src="item.img_url" alt="">
+                                    </el-dialog>
+                                </div>
+                                <p class="tip" v-show='module_name === "bannerS"'>建议上传750*1200px规格的图片（手机端）</p>
+                                <p class="tip" v-show='module_name === "bannerT"'>建议上传750*540px规格的图片（手机端）</p>
+                                <div class="up_img" :class='item.img_urlm?"hidden_add":""'>
+                                    <el-upload
+                                        action="/mall/admin_item/imageUp"
+                                        list-type="picture-card"
+                                        :headers='header'
+                                        :file-list="item.fileListm"
+                                        :on-success="handleAvatarSuccessm"
+                                        :on-preview="handlePictureCardPreview"
+                                        :on-remove="handleRemovem">
+                                        <i class="el-icon-plus"></i>
+                                    </el-upload>
+                                    <el-dialog :visible.sync="dialogVisible">
+                                        <img width="100%" :src="item.img_urlm" alt="">
+                                    </el-dialog>
+                                </div>
+                                <div class="title">
+                                    <span>链接</span>
+                                </div>
+                                <textarea v-model='item.url'>
+
+                                </textarea>
+                                <p class="operation">
+                                    <!-- <span>上移</span> -->
+                                    <span @click='delete_banner(index)'>删除模块</span>
+                                </p>
+                          </div>
+                        </el-collapse-item>
+                    </el-collapse>
+                    <p class="add_img" @click='add_item'>
+                        +添加图片
+                    </p>
+                </div>
+            </div>
+            <!-- 商品模块 -->
+            <div class="goods" v-show='module_name === "storeList" || module_name === "storeListAll"'>
+                <div class="back" @click='back'>商品</div>
+                <div class="content_box">
+                    <p class="p_head">标题</p>
+                    <el-input v-model="store_list.title" placeholder="模块标题"></el-input>
+                    <p class="p_head">显示商品</p>
+                    <div class="select_item">
+                        <el-select v-model="store_list.series" placeholder="请选择商品系列">
+                            <el-option
+                              v-for="item in series_options"
+                              :key="item.id"
+                              :label="item.name"
+                              :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </div>
+                    <p class="p_head">商品排序</p>
+                    <div class="select_item">
+                        <el-select v-model="store_list.rank" placeholder="请选择筛选条件">
+                            <el-option
+                              v-for="item in rank_options"
+                              :key="item.value"
+                              :label="item.label"
+                              :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                    <p class="p_head">商品数量</p>
+                    <div class="select_item">
+                        <el-select v-model="store_list.num" placeholder="请选择商品数量">
+                            <el-option
+                              v-for="item in num_options"
+                              :key="item.value"
+                              :label="item.value"
+                              :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                    <el-button type="primary" @click='storeListConfirm'>确认</el-button>
+                </div>
+            </div>
+            <!-- rightImg模块 &&  smallBanner模块-->
+            <div class="left_img" v-show='module_name === "rightImg" || module_name === "smallBanner"'>
+                <div class="back" @click='back'>图文海报</div>
+                <div class="content_box">
+                    <p class="p_head">标题</p>
+                    <el-input v-model="beside_img_list.title1" placeholder="模块标题"></el-input>
+                    <p class="p_head">文案</p>
+                    <textarea v-model="beside_img_list.title2">
+
+                    </textarea>
+                    <p class="p_head">按钮设置</p>
+                    <div>
+                        <span class="is_show">是否显示</span>
+                        <el-switch
+                            v-model="beside_img_list.is_button">
+                        </el-switch>
+                    </div>
+                    <p class="p_head">按钮文字</p>
+                    <el-input  v-model="beside_img_list.text" placeholder="按钮文字"></el-input>
+                    <p class="p_head">链接</p>
+                    <textarea v-model="beside_img_list.url">
+
+                    </textarea>
+                    <p class="p_head">上传图片</p>
+                    <p class="tip" v-show='module_name === "rightImg"'>建议上传910*540px规格的图片</p>
+                    <p class="tip" v-show='module_name === "smallBanner"'>建议上传1500*440px规格的图片</p>
+                    <div class="up_img" :class='beside_img_list.img_url?"hidden_add":""'>
+                        <el-upload
+                            action="/mall/admin_item/imageUp"
+                            list-type="picture-card"
+                            :headers='header'
+                            :file-list="beside_img_list.fileList"
+                            :on-success="handleAvatarSuccess"
+                            :on-preview="handlePictureCardPreview"
+                            :on-remove="handleRemove">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="dialogVisible">
+                            <img width="100%" :src="beside_img_list.img_url" alt="">
+                        </el-dialog>
+                    </div>
+                    
+                    <el-button type="primary" @click='storeListConfirm'>确认</el-button>
+                </div>
+            </div>
+            <!-- smallBannerS模块 &&  smallBannertT模块-->
+            <div class="left_img" v-show='module_name === "smallBannerS" || module_name === "smallBannerT"'>
+                <div class="back" @click='back'>图文海报</div>
+                <div class="content_box">
+                    <p class="p_head">海报</p>
+                    <p class="tip" v-show='module_name === "smallBannerS"'>建议上传1920*245px规格的图片（pc端）</p>
+                    <p class="tip" v-show='module_name === "smallBannerT"'>建议上传1920*770px规格的图片（pc端）</p>
+                    <div class="up_img" :class='small_banner.img_url?"hidden_add":""'>
+                        <el-upload
+                            action="/mall/admin_item/imageUp"
+                            list-type="picture-card"
+                            :headers='header'
+                            :file-list="small_banner.fileList"
+                            :on-success="handleAvatarSuccess"
+                            :on-preview="handlePictureCardPreview"
+                            :on-remove="handleRemove">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="dialogVisible">
+                            <img width="100%" :src="small_banner.img_url" alt="">
+                        </el-dialog>
+                    </div>
+                    <p class="tip" v-show='module_name === "smallBannerS"'>建议上传750*320px规格的图片（手机端）</p>
+                    <p class="tip" v-show='module_name === "smallBannerT"'>建议上传750*965px规格的图片（手机端）</p>
+                    <div class="up_img" :class='small_banner.img_urlm?"hidden_add":""'>
+                        <el-upload
+                            action="/mall/admin_item/imageUp"
+                            list-type="picture-card"
+                            :headers='header'
+                            :file-list="small_banner.fileListm"
+                            :on-success="handleAvatarSuccessm"
+                            :on-preview="handlePictureCardPreview"
+                            :on-remove="handleRemovem">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="dialogVisible">
+                            <img width="100%" :src="small_banner.img_urlm" alt="">
+                        </el-dialog>
+                    </div>
+                    
+                    <el-button type="primary" @click='storeListConfirm'>确认</el-button>
+                </div>
+            </div>
+            <!-- leftImg模块 -->
+            <div class="left_img" v-show='module_name === "leftImg"'>
+                <div class="back" @click='back'>图文海报</div>
+                <el-scrollbar style="height: calc(100% - 118px)">
+                    <div class="content_box">
+                        <p class="p_head">标题</p>
+                        <el-input v-model="left_img_list.title1" placeholder="模块标题"></el-input>
+                        <p class="p_head">标题</p>
+                        <textarea v-model="left_img_list.title2">
+
+                        </textarea>
+                        <p class="p_head">按钮设置</p>
+                        <div>
+                            <span class="is_show">是否显示</span>
+                            <el-switch
+                                v-model="left_img_list.is_button">
+                            </el-switch>
+                        </div>
+                        <p class="p_head">按钮文字</p>
+                        <el-input  v-model="left_img_list.text" placeholder="按钮文字"></el-input>
+                        <p class="p_head">链接</p>
+                        <textarea v-model="left_img_list.url">
+
+                        </textarea>
+                        <p class="p_head">上传图片</p>
+                        <el-collapse accordion v-model="activeName">
+                            <el-collapse-item :name="index" v-for='(item,index) in left_img_list.img_arr' :key='index'>
+                                <template slot="title">
+                                <div class="left">
+                                        <img src="__TMPL__/public/assets/images/dian.png" alt="">
+                                        <img src="__TMPL__/public/assets/images/add_png.png" alt="">
+                                        <span>图片{{index+1}}</span>
+                                </div>
+                                </template>
+                                <div class="content">
+                                    <p class="tip" v-show='index===0'>建议上传535*591px规格的图片</p>
+                                    <p class="tip" v-show='index!==0'>建议上传390*260px规格的图片</p>
+                                    <div class="up_img" :class='item.img_url?"hidden_add":""'>
+                                        <el-upload
+                                            action="/mall/admin_item/imageUp"
+                                            list-type="picture-card"
+                                            :headers='header'
+                                            :file-list="item.fileList"
+                                            :on-success="handleAvatarSuccess"
+                                            :on-preview="handlePictureCardPreview"
+                                            :on-remove="handleRemove">
+                                            <i class="el-icon-plus"></i>
+                                        </el-upload>
+                                        <el-dialog :visible.sync="dialogVisible">
+                                            <img width="100%" :src="item.img_url" alt="">
+                                        </el-dialog>
+                                    </div>
+                                    <p class="p_head">链接</p>
+                                    <textarea v-model='item.url'>
+
+                                    </textarea>
+                                </div>
+                            </el-collapse-item>
+                        </el-collapse>
+                    </div>
+                </el-scrollbar>
+            </div>
+            <!-- 自定义页面模块 -->
+            <div class="header" v-show='module_name === "self"'>
+                <div class="back" @click='back'>自定义页面</div>
+                <div class="content_box">
+                    <p class="p_head">页面标题</p>
+                    <textarea v-model='self.themes_name'>
+
+                    </textarea>
+                    <p class="p_head">链接</p>
+                    <textarea v-model='self.url' disabled>
+
+                    </textarea>
+                    <input type="text" id="copyData" style="opacity:0;width: 10px;" ref='copyUrl'>
+                    <el-button type="primary" @click='copyUrl'>复制链接</el-button>
+                </div>
+            </div>
+            <!-- header模块 -->
+            <div class="header" v-show='module_name === "header"'>
+                <div class="back" @click='back'>页头</div>
+                <el-scrollbar style="height: calc(100% - 118px)">
+                    <div class="content_box">
+                        <p class="p_head">菜单导航设置</p>
+                        <div class="select_item">
+                            <el-select v-model="header_list.id" placeholder="请选择菜单导航栏" @change='chang_nav'>
+                                <el-option
+                                v-for="item in menu_list"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                                </el-option>
+                            </el-select>
+                            <p class="edit">
+                                <a href="/admin/index/index.html#/mall/admin_design/nav.html" target="_blank" style="color: #2F90FF;">编辑菜单</a>
+                            </p>
+                        </div>
+                        <p class="p_head">购物车设置</p>
+                        <div>
+                            <span class="is_show">是否显示</span>
+                            <el-switch
+                                v-model="header_list.is_cart">
+                            </el-switch>
+                        </div>
+                        <p class="p_head">公告栏设置</p>
+                        <div>
+                            <span class="is_show">是否显示</span>
+                            <el-switch
+                                v-model="header_list.show">
+                            </el-switch>
+                        </div>
+                        <p class="p_head">公告栏文案</p>
+                        <textarea v-model='header_list.notice'>
+
+                        </textarea>
+                        <p class="p_head">链接</p>
+                        <textarea v-model='header_list.notice_url'>
+
+                        </textarea>
+                        <p class="p_head">LOGO图片</p>
+                        <p class="tip">建议上传233*56px规格的图片</p>
+                        <div class="up_img" :class='header_list.logo_img?"hidden_add":""'>
+                            <el-upload
+                                action="/mall/admin_item/imageUp"
+                                list-type="picture-card"
+                                :headers='header'
+                                :file-list="header_list.fileList"
+                                :on-success="handleAvatarSuccess"
+                                :on-preview="handlePictureCardPreview"
+                                :on-remove="handleRemove">
+                                <i class="el-icon-plus"></i>
+                            </el-upload>
+                            <el-dialog :visible.sync="dialogVisible">
+                                <img width="100%" :src="header_list.logo_img" alt="">
+                            </el-dialog>
+                        </div>
+                        <p class="p_head">链接</p>
+                        <textarea v-model='header_list.logo_url'>
+
+                        </textarea>
+                    </div>
+                </el-scrollbar>
+            </div>
+            <!-- footer模块 -->
+            <div class="footer" v-show='module_name === "footer"'>
+                <el-scrollbar style="height: calc(100% - 118px)">
+                    <div class="back" @click='back'>页尾</div>
+                    <div class="content_box">
+                        <p class="p_head">菜单导航设置</p>
+                        <div class="select_item">
+                            <el-select v-model="footer_list.id" placeholder="请选择菜单导航栏" @change='chang_nav'>
+                                <el-option
+                                v-for="item in menu_list"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                                </el-option>
+                            </el-select>
+                            <p class="edit">
+                                <a href="/admin/index/index.html#/mall/admin_design/nav.html" target="_blank" style="color: #2F90FF;">编辑菜单</a>
+                            </p>
+                        </div>
+                        <p class="p_head">公告栏设置</p>
+                        <div>
+                            <span class="is_show">是否显示</span>
+                            <el-switch
+                                v-model="header_list.show">
+                            </el-switch>
+                        </div>
+                        <p class="p_head">合作企业（支付公司/物流公司等）</p>
+                        <el-collapse accordion v-model="activeName">
+                            <el-collapse-item :name="index" v-for='(item,index) in footer_list.img_arr' :key='index'>
+                                <template slot="title">
+                                <div class="left">
+                                        <img src="__TMPL__/public/assets/images/dian.png" alt="">
+                                        <img src="__TMPL__/public/assets/images/add_png.png" alt="">
+                                        <span>logo</span>
+                                </div>
+                                </template>
+                                <div class="content">
+                                    <p class="tip">建议上传75*43px规格的图片</p>
+                                    <div class="up_img" :class='item.img_url?"hidden_add":""'>
+                                        <el-upload
+                                            action="/mall/admin_item/imageUp"
+                                            list-type="picture-card"
+                                            :headers='header'
+                                            :file-list="item.fileList"
+                                            :on-success="handleAvatarSuccess"
+                                            :on-preview="handlePictureCardPreview"
+                                            :on-remove="handleRemove">
+                                            <i class="el-icon-plus"></i>
+                                        </el-upload>
+                                        <el-dialog :visible.sync="dialogVisible">
+                                            <img width="100%" :src="item.img_url" alt="">
+                                        </el-dialog>
+                                    </div>
+                                </div>
+                            </el-collapse-item>
+                        </el-collapse>
+                        <p class="add_img" @click='add_item'>
+                            +添加企业logo
+                        </p>
+                    </div>
+                </el-scrollbar>
+            </div>
+            <div class="header" v-show='module_name === "global"'>
+                <div class="back" @click='back'>全局设置</div>
+                <el-scrollbar style="height: calc(100% - 118px)">
+                    <div class="content_box">
+                        <p class="p_head">常规设置</p>
+                        <div class="global">
+                            <div class="item">
+                                <div class="item_title">背景颜色</div>
+                                <div class="block">
+                                    <el-color-picker v-model="global_set.global.backgroundColor"></el-color-picker>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item_title">字体类型</div>
+                                <el-select v-model="global_set.global.textType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in textOptions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                        </div>
+                        <p class="p_head">标题设置</p>
+                        <div class="global">
+                            <div class="item">
+                                <div class="block">
+                                    <span>字体大小</span>
+                                    <el-slider v-model="global_set.title.fontSize"></el-slider>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="item_title">字体类型</div>
+                                <el-select v-model="global_set.title.textType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in textOptions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                        </div>
+                        <p class="p_head">按钮设置</p>
+                        <div class="global">
+                            <div class="item">
+                                <div class="item_title">字体类型</div>
+                                <el-select v-model="global_set.button.textType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in textOptions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                        </div>
+                        <p class="p_head">导航设置</p>
+                        <div class="global">
+                            <div class="item">
+                                <div class="item_title">字体类型</div>
+                                <el-select v-model="global_set.nav.textType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in textOptions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                        </div>
+                    </div>
+                </el-scrollbar>
+            </div>
+        </div>
+        <iframe src="__ROOT__/?_design_theme={:input('param.theme')}" frameborder="0" id="simulator"></iframe>
+    </div>
+</div>
+<!-- 引入初始化主题数据 -->
+<script src="__TMPL__/public/assets/js/page/admin_design/design_list.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    let iframe = document.getElementById('simulator')
+    let iwindow = iframe.contentWindow
+    // let idoc = iframe.contentDocument
+    let app2 = new Vue({
+        el:"#menu",
+        data:{
+            textOptions: [
+                {
+                    value: 'Microsoft YaHei',
+                    label: 'Microsoft YaHei'
+                },
+                {
+                    value: 'Poppins',
+                    label: 'Poppins'
+                },
+                {
+                    value: 'Roboto',
+                    label: 'Roboto'
+                },
+                {
+                    value: 'deng',
+                    label: 'deng'
+                }
+            ],
+            global_set:{
+                global:{
+                    backgroundColor:'#FFFFFF',
+                    textType:'Microsoft YaHei'
+                },
+                title:{
+                    fontSize:14,
+                    textType:'Microsoft YaHei'
+                },
+                button:{
+                    textType:'Microsoft YaHei'
+                },
+                nav:{
+                    textType:'Microsoft YaHei'
+                }
+            },
+            header:{
+                'X-Requested-With':'XMLHttpRequest'
+            },
+            showHeader:false,
+            module_falg:false,
+            edit_falg:false,
+            module:[
+                {
+                    id:1,
+                    target:'id1',
+                    name:'banner',
+                    zh_name:'轮播图',
+                    value:[
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/banner.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/banner.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/banner.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/banner.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/banner.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/banner.png'
+                            }],
+                            url:'/mall/list.html'
+                        }
+                    ]
+                },
+                {
+                    id:2,
+                    target:'id2',
+                    name:'storeList',
+                    zh_name:'商品',
+                    value:{
+                        title:'HATLEY STYLE',
+                        series:'',
+                        rank:1,
+                        num:4
+                    }
+                },
+                {
+                    id:3,
+                    target:'id3',
+                    name:'rightImg',
+                    zh_name:'图文陈列2',
+                    value:{
+                        is_button:true,
+                        title1:'Ergonomic Baby Carrier',
+                        title2:'The Sunveno 3 in 1 Infant HipseatErgonomic Baby Carrier KeepingYourBaby Safe and Comfortableds.to make simple, nutritious, organic food, free from all the bad stuff – A Pure Start To Life.',
+                        text:'VIEW MORE',
+                        url:'/mall/list.html',
+                        img_url:'/themes/51goushop/public/assets/demo/images/right_img.png',
+                        fileList:[{
+                            url:'/themes/51goushop/public/assets/demo/images/right_img.png'
+                        }]
+                    }
+                },
+                {
+                    id:4,
+                    target:'id4',
+                    name:'smallBanner',
+                    zh_name:'图文陈列3',
+                    value:{
+                        is_button:true,
+                        title1:'Kategori Populer',
+                        title2:'AND WITH CONFIDENCE, ANYTHING IS POSSIBLE!',
+                        text:'DISCOVER MORE',
+                        url:'/mall/list.html',
+                        img_url:'/themes/51goushop/public/assets/demo/images/small_banner.png',
+                        fileList:[{
+                            url:'/themes/51goushop/public/assets/demo/images/small_banner.png'
+                        }]
+                    }
+                },
+                {
+                    id:5,
+                    target:'id5',
+                    name:'leftImg',
+                    zh_name:'图文陈列1',
+                    value:{
+                        is_button:true,
+                        title1:'Ergonomic Baby Carrier',
+                        title2:'The Sunveno 3 in 1 Infant HipseatErgonomic Baby Carrier KeepingYourBaby Safe and Comfortable.to make simple, nutritious, organic food, free from all the bad stuff – A Pure Start To Life.',
+                        text:'VIEW MORE',
+                        url:'/mall/list.html',
+                        img_arr:[
+                            {
+                                img_url:'/themes/51goushop/public/assets/demo/images/left_img1.png',
+                                fileList:[{
+                                    url:'/themes/51goushop/public/assets/demo/images/left_img1.png'
+                                }],
+                                url:'/mall/list.html'
+                            },
+                            {
+                                img_url:'/themes/51goushop/public/assets/demo/images/left_img2.png',
+                                fileList:[{
+                                    url:'/themes/51goushop/public/assets/demo/images/left_img2.png'
+                                }],
+                                url:'/mall/list.html'
+                            },
+                            {
+                                img_url:'/themes/51goushop/public/assets/demo/images/left_img2.png',
+                                fileList:[{
+                                    url:'/themes/51goushop/public/assets/demo/images/left_img2.png'
+                                }],
+                                url:'/mall/list.html'
+                            },
+                        ]
+                    }
+                },
+                {
+                    id:6,
+                    target:'id6',
+                    name:'mySwiper',
+                    zh_name:'多小图轮播',
+                    value:[
+                        {
+                            title:'HATLEY STYLE',
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                    ]
+                },
+            ],
+            // module:[],
+            id:0,
+            itemKey:Math.random(),
+            module_name:'',
+            // 上传图片参数
+            dialogVisible: false,
+            activeName: 0,
+            // banner && mySwiper模块数据
+            banner_list:[{
+                title:''
+            }],
+            banner_list2:[],
+            // storeList模块数据
+            series_options: [],
+            rank_options: [
+                {
+                    value:1,
+                    label:'按销量'
+                },
+                {
+                    value:2,
+                    label:'按商家'
+                },
+                {
+                    value:3,
+                    label:'按销量'
+                },
+            ],
+            num_options: [
+                {
+                    value:4
+                },
+                {
+                    value:8
+                },
+                {
+                    value:12
+                },
+            ],
+            // 商品列表模块
+            store_list:{
+                title:'',
+                series:'',
+                rank:'',
+                num:4
+            },
+            // rightImg && smallBanner模块数据
+            beside_img_list:{
+                is_button:true,
+                title1:'',
+                title2:'',
+                text:'',
+                url:'',
+                img_url:''
+            },
+            // smallBanner模块数据
+            small_banner:{},
+            // lefthtImg模块数据
+            left_img_list:{
+                is_button:true,
+                title1:'',
+                title2:'',
+                text:'',
+                url:'',
+                img_arr:[]
+            },
+            // 页头
+            header_list:{
+                is_cart:true,
+                menu:'',
+                show:true,
+                notice:'',
+                notice_url:'',
+                logo_img:'/themes/51goushop/public/assets/img/logo.png',
+                logo_url:'',
+                fileList:[{url:'/themes/51goushop/public/assets/img/logo.png'}],
+                id:''
+            },
+            // 导航列表
+            menu_list:[],
+            // 页尾
+            footer_list:{
+                menu:'',
+                show:true,
+                img_arr:[{
+                    img_url:'/themes/51goushop/public/assets/img/paypal.png',
+                    fileList:[{url:'/themes/51goushop/public/assets/img/paypal.png'}]
+                }],
+                id:''
+            },
+            // 自定义页面
+            self:{
+                themes_name:'',
+                url:''
+            },
+            preview_flag:true,
+            optionId:'',
+            selectId:'',
+        },
+        created(){
+            // 获取系列
+            this.getSeries()
+            // 获取最大id
+            this.getMax()
+            // 获取导航
+            this.getMenu()
+            // 获取主体模块
+            this.getModule()
+            // 获取头部模块
+            this.getHeader()
+            // 获取页尾模块
+            this.getFooter(),
+            // 获取模板列表
+            this.getThemes()
+            // 获取全局变量
+            this.getGlobal()
+        },
+        mounted(){
+            this.rowDrop()
+        },
+        methods:{
+            copyUrl(){
+                let url = ''
+                if(this.self.url){
+                    url = this.self.url
+                }else{
+                    url = 'http://'+window.location.host+'/portal/index/self.html'
+                }
+                this.$refs.copyUrl.value = url
+                this.$refs.copyUrl.select();
+                document.execCommand("copy");
+                this.$message({
+                    message: '复制成功！',
+                    type: 'success'
+                });
+            },
+            // 打开模块弹框
+            add_modules(){
+                this.module_falg = true
+            },
+            // 添加模块并且初始化模块内容
+            add(name){
+                this.id += 1
+                let value = {}
+                let zh_name = ''
+                if(name == 'banner'){
+                    zh_name = '轮播图'
+                    value = [
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/banner.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/banner.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/banner.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/banner.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/banner.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/banner.png'
+                            }],
+                            url:'/mall/list.html'
+                        }
+                    ]
+                }else if(name == 'storeList'){
+                    zh_name = '商品'
+                    value = {
+                        title:'HATLEY STYLE',
+                        series:'',
+                        rank:1,
+                        num:4
+                    }
+                }else if(name == 'storeListAll'){
+                    zh_name = '商品2'
+                    value = {
+                        title:'HATLEY STYLE',
+                        series:'',
+                        rank:1,
+                        num:4
+                    }
+                }else if(name == 'rightImg'){
+                    zh_name = '图文陈列2'
+                    value = {
+                        is_button:true,
+                        title1:'Ergonomic Baby Carrier',
+                        title2:'The Sunveno 3 in 1 Infant HipseatErgonomic Baby Carrier KeepingYourBaby Safe and Comfortableds.to make simple, nutritious, organic food, free from all the bad stuff – A Pure Start To Life.',
+                        text:'VIEW MORE',
+                        url:'/mall/list.html',
+                        img_url:'/themes/51goushop/public/assets/demo/images/right_img.png',
+                        fileList:[{
+                            url:'/themes/51goushop/public/assets/demo/images/right_img.png'
+                        }]
+                    }
+                }else if(name == 'smallBanner'){
+                    zh_name = '图文陈列3'
+                    value = {
+                        is_button:true,
+                        title1:'Kategori Populer',
+                        title2:'AND WITH CONFIDENCE, ANYTHING IS POSSIBLE!',
+                        text:'DISCOVER MORE',
+                        url:'/mall/list.html',
+                        img_url:'/themes/51goushop/public/assets/demo/images/small_banner.png',
+                        fileList:[{
+                            url:'/themes/51goushop/public/assets/demo/images/small_banner.png'
+                        }]
+                    }
+                }else if(name == 'leftImg'){
+                    zh_name = '图文陈列1'
+                    value = {
+                        is_button:true,
+                        title1:'Ergonomic Baby Carrier',
+                        title2:'The Sunveno 3 in 1 Infant HipseatErgonomic Baby Carrier KeepingYourBaby Safe and Comfortable.to make simple, nutritious, organic food, free from all the bad stuff – A Pure Start To Life.',
+                        text:'VIEW MORE',
+                        url:'/mall/list.html',
+                        img_arr:[
+                            {
+                                img_url:'/themes/51goushop/public/assets/demo/images/left_img1.png',
+                                fileList:[{
+                                    url:'/themes/51goushop/public/assets/demo/images/left_img1.png'
+                                }],
+                                url:'/mall/list.html'
+                            },
+                            {
+                                img_url:'/themes/51goushop/public/assets/demo/images/left_img2.png',
+                                fileList:[{
+                                    url:'/themes/51goushop/public/assets/demo/images/left_img2.png'
+                                }],
+                                url:'/mall/list.html'
+                            },
+                            {
+                                img_url:'/themes/51goushop/public/assets/demo/images/left_img2.png',
+                                fileList:[{
+                                    url:'/themes/51goushop/public/assets/demo/images/left_img2.png'
+                                }],
+                                url:'/mall/list.html'
+                            },
+                        ]
+                    }
+                }else if(name == 'mySwiper'){
+                    zh_name = '多小图轮播'
+                    value = [
+                        {
+                            title:'HATLEY STYLE',
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                    ]
+                }else if(name == 'newSwiper'){
+                    zh_name = '多小图轮播2'
+                    value = [
+                        {
+                            title:'HATLEY STYLE',
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        },
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/more_img.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/more_img.png'
+                            }],
+                            url:'/mall/list.html'
+                        }
+                    ]
+                }else if(name == 'bannerS'){
+                    zh_name = '轮播图2'
+                    value = [
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/bannerS.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/bannerS.png'
+                            }],
+                            img_urlm:'/themes/51goushop/public/assets/demo/images/bannerSm.png',
+                            fileListm:[{
+                                url:'/themes/51goushop/public/assets/demo/images/bannerSm.png'
+                            }],
+                            url:'/mall/list.html'
+                        }
+                    ]
+                }else if(name == 'bannerT'){
+                    zh_name = '轮播图3'
+                    value = [
+                        {
+                            img_url:'/themes/51goushop/public/assets/demo/images/bannerT.png',
+                            fileList:[{
+                                url:'/themes/51goushop/public/assets/demo/images/bannerT.png'
+                            }],
+                            img_urlm:'/themes/51goushop/public/assets/demo/images/bannerTm.png',
+                            fileListm:[{
+                                url:'/themes/51goushop/public/assets/demo/images/bannerTm.png'
+                            }],
+                            url:'/mall/list.html'
+                        }
+                    ]
+                }else if(name == 'smallBannerS'){
+                    zh_name = '图文陈列4'
+                    value = {
+                        url:'/mall/list.html',
+                        img_url:'/themes/51goushop/public/assets/demo/images/smallBannerS.png',
+                        fileList:[{
+                            url:'/themes/51goushop/public/assets/demo/images/smallBannerS.png'
+                        }],
+                        img_urlm:'/themes/51goushop/public/assets/demo/images/smallBannerSm.png',
+                        fileListm:[{
+                            url:'/themes/51goushop/public/assets/demo/images/smallBannerSm.png'
+                        }]
+                    }
+                }else if(name == 'smallBannerT'){
+                    zh_name = '图文陈列5'
+                    value = {
+                        url:'/mall/list.html',
+                        img_url:'/themes/51goushop/public/assets/demo/images/smallBannerT.png',
+                        fileList:[{
+                            url:'/themes/51goushop/public/assets/demo/images/smallBannerT.png'
+                        }],
+                        img_urlm:'/themes/51goushop/public/assets/demo/images/smallBannerTm.png',
+                        fileListm:[{
+                            url:'/themes/51goushop/public/assets/demo/images/smallBannerTm.png'
+                        }]
+                    }
+                }
+                this.module.push({
+                    id:this.id,
+                    target:'id'+this.id,
+                    name,
+                    value,
+                    zh_name
+                })
+                iwindow.app.module = this.module
+                this.$message({
+                message: '成功添加！',
+                type: 'success'
+                });
+            },
+            // 删除已选模块
+            move(scope){
+                this.$confirm('此操作将删除该模块, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                    }).then(() => {
+                        let index = scope.$index
+                        this.module.splice(index,1)
+                        iwindow.app.module = [...this.module]
+                        this.itemKey = Math.random()
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                    });          
+                });
+            },
+            //行拖拽
+            rowDrop() {
+                this.tbody = document.querySelector('.el-table__body-wrapper tbody')
+                const _this = this
+                Sortable.create(this.tbody, {
+                    // 移动位置，并非交换位置
+                    onEnd({ newIndex, oldIndex }) {
+                        const currRow = _this.module.splice(oldIndex, 1)[0]
+                        _this.module.splice(newIndex, 0, currRow)
+                        iwindow.app.module = [..._this.module]
+                        _this.itemKey = Math.random()
+                        _this.$nextTick(()=>{
+                            _this.rowDrop()
+                        })
+                    }
+                })
+
+            },
+            // 全局设置
+            editGlobal(){
+                this.edit_falg = true
+                this.module_name = 'global'
+            },
+            // 编辑
+            edit(scope){
+                this.edit_falg = true
+                let index = scope.$index
+                let name = scope.row?scope.row.name:''
+                this.module_name = name
+                if(name === 'rightImg' || name === 'smallBanner'){
+                    this.module[index].value.is_button = Number(this.module[index].value.is_button)?true:false
+                    this.beside_img_list = this.module[index].value
+                }else if(name === 'leftImg'){
+                    this.module[index].value.is_button = Number(this.module[index].value.is_button)?true:false
+                    this.left_img_list = this.module[index].value
+                }else if(name === 'banner' || name === 'mySwiper' || name === 'newSwiper'){
+                    this.banner_list = this.module[index].value
+                }else if(name === 'storeList' || name === 'storeListAll'){
+                    this.store_list = this.module[index].value
+                }else if(scope === 'header'){
+                    this.module_name = 'header'
+                }else if(scope === 'footer'){
+                    this.module_name = 'footer'
+                }else if(scope === 'self'){
+                    this.module_name = 'self'
+                }else if(name === 'bannerS' || name === 'bannerT'){
+                    this.banner_list2 = this.module[index].value
+                }else if(name === 'smallBannerS' || name === 'smallBannerT'){
+                    this.small_banner = this.module[index].value
+                }
+                iwindow.app.module = this.module
+            },
+            // banner
+            // 添加图片列表
+            add_item(){
+                if(this.module_name === 'footer'){
+                    this.footer_list.img_arr.push({
+                        img_url:'/themes/51goushop/public/assets/img/paypal.png',
+                        fileList:[{url:'/themes/51goushop/public/assets/img/paypal.png'}]
+                    })
+                }else if(this.module_name === 'bannerS'){
+                    this.banner_list2.push({
+                        img_url:'/themes/51goushop/public/assets/demo/images/bannerS.png',
+                        fileList:[{
+                            url:'/themes/51goushop/public/assets/demo/images/bannerS.png'
+                        }],
+                        img_urlm:'/themes/51goushop/public/assets/demo/images/bannerSm.png',
+                        fileListm:[{
+                            url:'/themes/51goushop/public/assets/demo/images/bannerSm.png'
+                        }],
+                        url:'/mall/list.html'
+                    })
+                    iwindow.app.module = this.deepCopy(this.module)
+                }else if(this.module_name === 'bannerT'){
+                    this.banner_list2.push({
+                        img_url:'/themes/51goushop/public/assets/demo/images/bannerT.png',
+                        fileList:[{
+                            url:'/themes/51goushop/public/assets/demo/images/bannerT.png'
+                        }],
+                        img_urlm:'/themes/51goushop/public/assets/demo/images/bannerTm.png',
+                        fileListm:[{
+                            url:'/themes/51goushop/public/assets/demo/images/bannerTm.png'
+                        }],
+                        url:'/mall/list.html'
+                    })
+                    iwindow.app.module = this.deepCopy(this.module)
+                }else{
+                    this.banner_list.push({
+                        img_url:'/themes/51goushop/public/assets/demo/images/banner.png',
+                        fileList:[{
+                            url:'/themes/51goushop/public/assets/demo/images/banner.png'
+                        }],
+                        url:'/mall/list.html'
+                    })
+                    iwindow.app.module = this.deepCopy(this.module)
+                }
+            },
+            // 删除图片列表
+            delete_banner(index){
+                this.$confirm('此操作将删除该模块, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                    }).then(() => {
+                        this.banner_list.splice(index,1)
+                        iwindow.app.module = this.deepCopy(this.module)
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                    });          
+                });
+            },
+            // 删除图片
+            handleRemove(file, fileList) {
+                // 删除图片以及fileList里面的路径
+                if(this.module_name == 'rightImg' || this.module_name == 'smallBanner'){
+                    this.beside_img_list.img_url = ''
+                    this.beside_img_list.fileList[0].url = ''
+                }else if(this.module_name == 'leftImg'){
+                    this.left_img_list.img_arr[this.activeName].img_url = ''
+                    this.left_img_list.img_arr[this.activeName].fileList[0].url = ''
+                }else if(this.module_name == 'banner' || this.module_name === 'mySwiper' || this.module_name === 'newSwiper'){
+                    this.banner_list[this.activeName].img_url = ''
+                    this.banner_list[this.activeName].fileList[0].url = ''
+                }else if(this.module_name === 'header'){
+                    this.header_list.logo_img = ''
+                    this.header_list.fileList[0].url = ''
+                }else if(this.module_name === 'footer'){
+                    this.footer_list.img_arr[this.activeName].img_url = ''
+                    this.footer_list.img_arr[this.activeName].fileList[0].url = ''
+                }else if(this.module_name == 'bannerS' || this.module_name === 'bannerT'){
+                    this.banner_list2[this.activeName].img_url = ''
+                    this.banner_list2[this.activeName].fileList[0].url = ''
+                }else if(this.module_name == 'smallBannerS' || this.module_name === 'smallBannerT'){
+                    this.small_banner.img_url = ''
+                    this.small_banner.fileList[0].url = ''
+                }
+            },
+            // 删除图片（手机端图片）
+            handleRemovem(file, fileList) {
+                // 删除图片以及fileList里面的路径
+                if(this.module_name == 'bannerS' || this.module_name === 'bannerT'){
+                    this.banner_list2[this.activeName].img_urlm = ''
+                    this.banner_list2[this.activeName].fileListm[0].url = ''
+                }else if(this.module_name == 'smallBannerS' || this.module_name === 'smallBannerT'){
+                    this.small_banner.img_urlm = ''
+                    this.small_banner.fileListm[0].url = ''
+                }
+            },
+            // 预览图片
+            handlePictureCardPreview(file) {
+                // this.banner_list[this.activeName].img_url = file.url;
+                this.dialogVisible = true;
+            },
+            // 获取图片地址
+            handleAvatarSuccess(res){
+                // 添加图片以及fileList里面的路径
+                    let index = this.activeName
+                if(this.module_name === 'banner' || this.module_name === 'mySwiper' || this.module_name === 'newSwiper'){
+                    this.banner_list[index].img_url = res.data.url
+                    this.banner_list[this.activeName].fileList[0].url = res.data.url
+                }else if(this.module_name === 'rightImg' ||this.module_name === 'smallBanner'){
+                    this.beside_img_list.img_url = res.data.url
+                    this.beside_img_list.fileList[0].url = res.data.url
+                }else if(this.module_name === 'leftImg'){
+                    this.left_img_list.img_arr[index].img_url = res.data.url
+                    this.left_img_list.img_arr[this.activeName].fileList[0].url = res.data.url
+                }else if(this.module_name === 'header'){
+                    this.header_list.logo_img = res.data.url
+                    this.header_list.fileList[0].url = res.data.url
+                }else if(this.module_name === 'footer'){
+                    this.footer_list.img_arr[index].img_url = res.data.url
+                    this.footer_list.img_arr[index].fileList[0].url = res.data.url
+                }else if(this.module_name === 'bannerS' || this.module_name === 'bannerT'){
+                    this.banner_list2[index].img_url = res.data.url
+                    this.banner_list2[this.activeName].fileList[0].url = res.data.url
+                }else if(this.module_name == 'smallBannerS' || this.module_name === 'smallBannerT'){
+                    this.small_banner.img_url = res.data.url
+                    this.small_banner.fileList[0].url = res.data.url
+                }
+            },
+            // 获取图片地址（手机端图片）
+            handleAvatarSuccessm(res){
+                // 添加图片以及fileList里面的路径
+                    let index = this.activeName
+                if(this.module_name === 'bannerS' || this.module_name === 'bannerT'){
+                    this.banner_list2[index].img_urlm = res.data.url
+                    this.banner_list2[this.activeName].fileListm[0].url = res.data.url
+                }else if(this.module_name == 'smallBannerS' || this.module_name === 'smallBannerT'){
+                    this.small_banner.img_urlm = res.data.url
+                    this.small_banner.fileListm[0].url = res.data.url
+                }
+            },
+            // storeList模块
+            getSeries(){
+                axios.get('/mall/admin_tag/getTagList.html')
+                .then(res=>{
+                    this.series_options = res.data.data.data
+                })
+            },
+            // 确定
+            storeListConfirm(){
+            },
+            // 返回
+            back(){
+                this.module_falg = false
+                this.edit_falg = false
+                this.module_name = ''
+            },
+            table_select:function(e){
+                let url = '#'+e.target
+                iwindow.app.move(url)
+            },
+            getMax(){
+                let max = 0
+                this.module.forEach(item=>{
+                    if(item.id > max){
+                        max = item.id
+                    }
+                })
+                this.id = max
+            },
+            getMenu(){
+                axios.get('/mall/nav/getNavList')
+                .then(res=>{
+                    this.menu_list = res.data.data
+                })
+            },
+            deepCopy(obj){
+                if(obj === null){
+                    return null
+                }
+                let newobj = obj.constructor === Array ? [] : {};
+                if (typeof obj != 'object') {
+                    return obj;
+                }else {
+                    for (let i in obj) {
+                        if (typeof obj[i] === 'object'){ //判断对象的这条属性是否为对象
+                        newobj[i] = this.deepCopy(obj[i]);  //若是对象进行嵌套调用
+                        }else{
+                            newobj[i] = obj[i];
+                        }
+                    }
+                }
+                    return newobj; //返回深度克隆后的对象
+            },
+            // 获取主体模块
+            getModule(){
+                axios.get('/mall/index/getWebsiteDesignDetail',{
+                    params:{
+                        template_key:'classic'
+                    }
+                })
+                .then(res=>{
+                    if(res.data.code===1){
+                        this.module = res.data.data.website.value
+                        setTimeout(()=>{
+                            iwindow.app.module = this.module
+                        },1000)
+                    }else{
+                        this.$message.error(res.data.msg)
+                    }
+                })
+            },
+            getThemes(){
+                axios.get('/mall/admin_design/getIsUsingTemplates')
+                .then(res=>{
+                    if(res.data.code === 1){
+                        let options = res.data.data.zi_themes
+                        options.unshift(res.data.data.shouye)
+                        getThemes(options)
+                    }else{
+                        this.$message.error(res.data.msg)
+                    }
+                })
+            },
+            // 获取全局变量
+            getGlobal(){
+                axios.get('/mall/index/getGlobalVariable',{
+                    params:{
+                        template_key:'global'
+                    }
+                })
+                .then(res=>{
+                    if(res.data.code === 1){
+                        res.data.data.value.title.fontSize = Number(res.data.data.value.title.fontSize)
+                        this.global_set = res.data.data.value
+                    }
+                })
+            },
+            // 获取头部模块
+            getHeader(){
+                axios.get('/mall/index/getWebsiteDesignDetail',{
+                    params:{
+                        template_key:'header'
+                    }
+                })
+                .then(res=>{
+                    if(res.data.code===1){
+                        res.data.data.website.value.id = Number(res.data.data.website.value.id)
+                        res.data.data.website.value.show = Number(res.data.data.website.value.show)?true:false
+                        res.data.data.website.value.is_cart = Number(res.data.data.website.value.is_cart)?true:false
+                        this.header_list = res.data.data.website.value
+                    }else{
+                        this.$message.error(res.data.msg)
+                    }
+                })
+            },
+            // 获取尾部模块
+            getFooter(){
+                axios.get('/mall/index/getWebsiteDesignDetail',{
+                    params:{
+                        template_key:'footer'
+                    }
+                })
+                .then(res=>{
+                    if(res.data.code===1){
+                        this.footer_list = res.data.data.website.value
+                    }else{
+                        this.$message.error(res.data.msg)
+                    }
+                })
+            },
+            chang_nav(id){
+                if(this.module_name === 'header'){
+                    this.menu_list.forEach(item=>{
+                        if(item.id === id){
+                            this.header_list.menu = item
+                        }
+                    })
+                }else{
+                    this.menu_list.forEach(item=>{
+                        if(item.id === id){
+                            this.footer_list.menu = item
+                        }
+                    })
+                }
+            }
+        },
+    })
+    let btn = document.querySelector('#post_btn')
+    btn.onclick = function(){
+        let id = Number($('.pagesOption').val())?Number($('.pagesOption').val()):''
+        saveTheme(id)
+        saveGlobal()
+    }
+    function saveTheme(id){
+        let data = {
+            id,
+            header:{
+                template_key:'header',
+                value:app2.header_list
+            },
+            classic:{
+                template_key:'classic',
+                value:app2.module
+            },
+            footer:{
+                template_key:'footer',
+                value:app2.footer_list
+            }
+        }
+        if(!id){
+            delete data.id
+            data.themes_name = app2.self.themes_name
+            if(!data.themes_name){
+                app2.$message.error('页面名字不能为空')
+                return
+            }
+        }
+        axios.post('/mall/admin_design/postTemplate',data)
+        .then(res=>{
+            if(res.data.code===1){
+                app2.$message({
+                    message: '保存成功',
+                    type: 'success'
+                });
+                location.reload();
+            }else{
+                app2.$message({
+                    message: res.data.msg,
+                    type: 'error'
+                });
+            }
+        })
+    }
+    function saveGlobal(){
+        axios.post('/mall/admin_design/postGlobalVariable',{
+            template_key:'global',
+            value:app2.global_set
+        })
+        .then(res=>{
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    }
+
+    let preview = document.querySelector('#preview')
+    preview.onclick = function(){
+        app2.preview_flag = !app2.preview_flag
+    }
+
+    $('.mobile_active').click(()=>{
+        $('.mobile_edit').show()
+        $('.pc_edit').hide()
+        $('#simulator').addClass('simulator')
+    })
+    $('.pc_active').click(()=>{
+        $('.pc_edit').show()
+        $('.mobile_edit').hide()
+        $('#simulator').removeClass('simulator')
+    })
+    $('#back').click(()=>{
+        location.href = '/admin/index/index.html'
+    })
+    // 获取页面列表
+    function getThemes(options){
+        let html =''
+        options.forEach((item,index)=>{
+            if(!index){
+                app2.optionId = item.id
+                app2.selectId = app2.optionId
+            }
+            html += `<option value="${item.id}" class='hasSelect'>${item.themes_name}</option>`
+        })
+        html += `<option value="0">自定义页面</option>` 
+        $('.pagesOption').html('')
+        $('.pagesOption').html(html)
+        $('.pagesOption').on('change',function(){
+            app2.selectId = Number($(this).val())
+            if(!app2.selectId){
+                addPage()
+            }else{
+                app2.self.themes_name = $('.hasSelect:selected').html()
+                app2.self.url = 'http://'+window.location.host+'/portal/index/self.html?id='+app2.selectId
+                getSonPage(app2.selectId)
+            }
+        })
+    }
+    // 新增自定义页面
+    function addPage(){
+        app2.module = theme2
+        setTimeout(()=>{
+            iwindow.app.module = app2.module
+        },1000)
+        $('iframe').attr('src','/portal/index/self.html')
+    }
+    // 获取自定义页面数据
+    function getSonPage(id){
+        axios.get('/mall/index/getCustomDesignDetail',{
+            params:{
+                id
+            }
+        })
+        .then(res=>{
+            if(res.data.code ===1){
+                let header = res.data.data[0].option_value.value
+                let classic = res.data.data[1].option_value.value
+                let footer = res.data.data[2].option_value.value
+
+                // 头部
+                console.log(header)
+                header.id = Number(header.id)
+                header.show = Number(header.show)?true:false
+                header.is_cart = Number(header.is_cart)?true:false
+                app2.header_list = header
+                // // 尾部
+                app2.footer_list = footer
+                // // 主体
+                app2.module = classic
+                iwindow.app.module = app2.module
+            }else{
+                app2.$message.error(res.data.msg)
+            }
+        })
+    }
+</script>
+</body>
+</html>

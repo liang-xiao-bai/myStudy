@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./index.js"></script>
+    <script>
+        new promiseFirst((resolve,reject)=>{
+            setTimeout(()=>{
+                resolve('画魂')
+            })
+            // reject('失败')
+        })
+        .then(data=>{
+            console.log(data)
+            return new promiseFirst((resolve,reject)=>{
+                resolve(new promiseFirst((resolve,reject)=>{
+                    resolve('hello JS')
+                }))
+            })
+        })
+        .then(data=>{
+            console.log(data)
+            return new promiseFirst((resolve,reject)=>{
+                resolve('hello TS')
+            })
+        })
+        .then(data=>{
+            console.log(data)
+        })
+    </script>
+</body>
+</html>
