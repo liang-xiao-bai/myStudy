@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        #container {
+            width: 400px;
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        #photo {
+            height: 1800px;
+            animation: switch 10s ease-out infinite;
+        }
+        
+        #photo > div {
+            /* float: left; */
+            width: 400px;
+            height: 300px;
+        }
+        
+        @keyframes switch {
+            0%, 10% {
+                margin-top: 0;
+            }
+            20%, 30% {
+                margin-top: -300px;
+            }
+            40%, 50% {
+                margin-top: -600px;
+            }
+            60%, 70%{
+                margin-top: -900px;
+            }
+            80%, 90%{
+                margin-top: -1200px;
+            }
+            99%, 100%{
+                margin-top: -1500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="photo">
+            <div style="background-color: red;">111111</div>
+            <div style="background: blue;">222222</div>
+            <div style="background: green;">333333</div>
+            <div style="background: yellow;">333333</div>
+            <div style="background: pink;">333333</div>
+            <div style="background-color: red;">111111</div>
+        </div>
+    </div>
+</body>
+</html>

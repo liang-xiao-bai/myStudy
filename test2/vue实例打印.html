@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./JS/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="g-table-wrap">
+            <div>
+              <slot name="header" />
+            </div>
+            <div>
+              <el-table ref="tableRef"
+                        v-loading="loading"
+                        :data="tableList"
+                        :size="size"
+                        :border="border"
+                        :stripe="stripe"
+                        :row-key="rowKey"
+                        class="g-table"
+                        :class="{'g-table-dense':dense}"
+                        v-bind="combAttrs"
+                        v-on="$listeners"
+              >
+                <el-table-column v-if="showOrder" label="#" width="60" align="center">
+                  <template v-slot="{$index}">
+                    {{ $index + 1 + (page.current - 1) * page.size }}
+                  </template>
+                </el-table-column>
+                <template v-if="Array.isArray(headers)">
+                  <template v-for="(item,index) in headers">
+                    <!-- 是否使用自定义具名slot -->
+                    <template v-if="item.slot">
+                      <v-render :key="rowKey?item[rowKey]:index"
+                                :data="item"
+                                :v-nodes="$slots[item.slotName]"
+                      />
+                    </template>
+                    <el-table-column :key="rowKey?item[rowKey]:index" v-bind="item" />
+                  </template>
+                </template>
+                <slot v-else />
+              </el-table>
+            </div>
+            <div class="footer-box">
+              <div class="page-left">
+                <slot name="footer-left" />
+              </div>
+              <el-pagination
+                v-if="pageShow"
+                :page-size.sync="page.size"
+                :current-page.sync="page.current"
+                :layout="page.layout"
+                :page-sizes="page.sizes"
+                :total="page.total"
+                :pager-count="pagerCount"
+                :disabled="loading"
+                @current-change="currentChange"
+                @size-change="sizeChange"
+              />
+            </div>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                msg:"vue实例"
+            },
+            methods:{
+                getVue(){
+                    console.log(this)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

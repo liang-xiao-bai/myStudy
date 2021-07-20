@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			form {
+				width: 500px;
+				height: auto;
+				border: 2px solid red;
+				margin: auto;
+			}
+			
+			label {
+				display: inline-block;
+				width: 120px;
+				height: 40px;
+				text-align: right;
+				line-height: 40px;
+			}
+			
+			.box {
+				position: relative;
+			}
+			
+			.box>button {
+				position: absolute;
+				left: 271px;
+				top: 11px;
+				display: none;
+			}
+			
+			.upload {
+				border: none;
+				border-radius: 5px;
+				background: orange;
+				cursor: pointer;
+				width: 120px;
+				height: 30px;
+				color: white;
+				outline: none;
+			}
+			
+			.upload:hover {
+				background: orangered;
+			}
+			
+			.img-box img {
+				width: 200px;
+				height: 200px;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--action:服务器上传地址  method:上传方式  enctype:设置上传方式、用于文件上传时设置-->
+		<form action="index.html" method="get" enctype="multipart/form-data">
+			<!--表单域-->
+			<div class="box">
+				<label for="username">用户名：</label>
+				<input type="text" id="username" name="username" />
+			</div>
+			<div class="box">
+				<label for="userpwd">密码：</label>
+				<input type="password" id="userpwd" name="userpwd" />
+				<button type="button">显示</button>
+			</div>
+			<div class="box">
+
+				<label for="usersex">性别：</label>
+				<input type="radio" id="usersex" name="usersex" checked="checked" />男
+				<input type="radio" name="usersex" />女
+			</div>
+			<div class="file">
+				<label for="userpic">用户头像：</label>
+				<button class="upload" type="button">上传图片+</button>
+				<input type="file" hidden="hidden" id="userpic" name="userpic" />
+				<div class="img-box"></div>
+			</div>
+			<div class="box">
+
+				<input type="submit" />
+			</div>
+		</form>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script>
+			$(function() {
+				$("#userpwd").focus(function() {
+						//显示眼睛按钮
+						$(this).next("button").show();
+					})
+					//点击按钮显示密码为文本
+				var flag = false;
+				$(".box>button").click(function() {
+						if (!flag) {
+							$(this).prev().attr("type", "text");
+							flag = true;
+							$(this).text("隐藏")
+						} else {
+							$(this).prev().attr("type", "password");
+							flag = false;
+							$(this).text("显示")
+						}
+					})
+					//点击上传按钮打开选择图像、去触发input【type=file】的事件
+				$(".file>.upload").click(function() {
+						$(this).next().click();
+					})
+					//监听文件上传input的change事件
+				$("#userpic").change(function(e) {
+					//上传图片限制
+					//得到图片的大小与图片类型
+					var size = this.files[0].size;
+					var type = this.files[0].type;
+					//判断是否是图片
+					if (type.match(/image/) == "image") {
+						//图片大小是否超出200kb
+						if (size < (1024 * 1000)) {
+							
+							var file = this.files[0];
+							//实例化文件对象
+							var fileReader = new FileReader();
+							//把文件对象转为url base64编码
+							fileReader.readAsDataURL(file);
+							//等待编码转换完毕后再添加图片到指定位置
+							fileReader.onload = function() {
+								//						console.log(this.result);
+								//创建img标签并添加到img-box中
+								var img = $("<img src='" + this.result + "' />");
+								$(".img-box").html(img);
+							}
+						} else {
+							alert("你选的图片超出了1000kb？");
+						}
+					} else {
+						alert("你确定你选的是图片？");
+					}
+					//得到选择的上传文件
+					console.log(e.target.files[0])
+						//					console.log(this.files[0])
+						//					var file = this.files[0];
+						//					//实例化文件对象
+						//					var fileReader = new FileReader();
+						//					//把文件对象转为url base64编码
+						//					fileReader.readAsDataURL(file);
+						//					//等待编码转换完毕后再添加图片到指定位置
+						//					fileReader.onload = function(){
+						////						console.log(this.result);
+						//						//创建img标签并添加到img-box中
+						//						var img = $("<img src='"+this.result+"' />");
+						//						$(".img-box").html(img);
+						//					}
+				})
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./JS/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <child :father-method="fatherMethod"></child>
+        </div>
+    </div>
+    <script>
+        const child = {
+            template:`
+                <div>
+                    <p>我是子组件</p>
+                    <button @click="childMethod()">点击</button>
+                </div>
+            `,
+            props: {
+                fatherMethod: {
+                    type: Function,
+                    default: null
+                }
+            },
+            methods:{
+                childMethod(){
+                    console.log(this.fatherMethod)
+                }
+            }
+        }
+        new Vue({
+            el:'#app',
+            components:{
+                child
+            },
+            data:{
+                msg:666666
+            },
+            methods:{
+                fatherMethod() {
+                    console.log('测试');
+                }
+            }
+        })
+    </script>
+</body>
+</html>

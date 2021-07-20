@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Hello App!</h1>
+        <p>
+          <router-link to="/foo">Go to Foo</router-link>
+          <router-link to="/bar">Go to Bar</router-link>
+        </p>
+        <router-view></router-view>
+    </div>
+    <script>
+        const First = {
+            template:`<p>我是Foo first</p>`
+        }
+        const Second = {
+            template:`<p>我是Foo second</p>`
+        }
+        const Foo = {
+            template:`
+            <div>
+                <p>我是Foo</p>
+                <router-link to="/foo/first">Foo first</router-link>
+                <router-link to="/foo/second">Foo second</router-link>
+                <router-view></router-view>
+            </div>`
+        }
+        const Bar = {
+            template:`<div>我是Bar</div>`
+        }
+        const routes = [
+            {
+                path:'',
+                redirect:'/foo'
+            },
+            {
+                path:'/foo',
+                component:Foo,
+                children:[
+                    {
+                        path:'first',
+                        component:First
+                    },
+                    {
+                        path:'second',
+                        component:Second
+                    }
+                ]
+            },
+            {
+                path:'/bar',
+                component:Bar
+            }
+        ]
+        const router = new VueRouter({
+            routes
+        })
+        new Vue({
+            el:'#app',
+            router,
+
+        })
+    </script>
+</body>
+</html>

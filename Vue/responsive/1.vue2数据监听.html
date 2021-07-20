@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        模拟数据
+    </div>
+    <script>
+        let data = {
+            msg:"模拟数据"
+        }
+        // 模拟Vue实例
+        let vm = {}
+        
+        Object.defineProperty(vm,'msg',{
+            enumerable:true,
+            configurable:true,
+            get(){
+                return data.msg
+            },
+            set(newvalue){
+                if(newvalue === data.msg){
+                    return
+                }
+                data.msg = newvalue
+                document.querySelector('#app').textContent = data.msg
+            }
+        })
+        vm.msg = 'hello world'
+        console.log(vm.msg)
+    </script>
+</body>
+</html>

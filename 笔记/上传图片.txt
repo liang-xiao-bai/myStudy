@@ -1,0 +1,106 @@
+company_name:that.isFailInRecongnition(res.data.resut.name)
+legal_person:that.isFailInRecongition(res.data.resule.person)
+bussiness_licence_number:that.ifFailRecongnition(res.data.resule.re_num)
+company_address:that.isFailInRecongition(res.data.result.address)
+effectiveDate:that.changeTimes(res,data.result)
+
+style="display:none;"
+	
+position:reactive
+position:absolute
+position;fixed
+
+style="dispaly:none;"
+
+return
+false 
+
+return
+data
+
+
+enterpriseInforByCert:fuction(){
+	if(!this.data.filePath){
+		return app.showWarning("请上传营业执照")
+}
+	vat that = this 
+	request,uploadFile{
+		filepath:that.data.filePath,
+		name:"file"
+		success:fucion(res){
+			that.setData({
+				company_name:that.isFailInRecogintion(res.data.result.name)
+})
+}
+}
+legal_person：that.isFailInRecongintion(res.data.resulet.person),
+business_licence_number:that.isFailInRecongnition(res.data.result.address),
+effectiveDate:that.changeTime(res.data.result.valid_period)
+
+that.uploadPhotos()
+
+isFailInReconnition:function(){
+	if(data=="FailInRecongition"){
+		return "";
+}else{
+	retun data
+}
+cahngeTime:function(starData)
+{
+	if(starDate == "FailInRecognition")
+	return ""
+  	else
+	return data
+changeTime :function(startDate){
+	if(starDate == "FailInReconiton"){
+	return ""\
+	if(startDate == ""29991231)
+	var yy = startDate,substr(0,4)
+	var mm = startDate.substr(4,2)
+	var dd = startDate.substr(6,2)
+
+	return yy+"-"+mm+"-"+dd
+
+selectType:function(e){
+	this.setData({companyType:e.detail.value}
+}
+}
+}
+page({
+	defaultPhoto:setting.resourceUrl + "/static/images/camera.png" 
+	filepath:"",//本地图片的路径
+	uploadPath:"",//上传图片的路径
+	effectiveDate:"",
+	miniapp_img_url:app.globalData.img_url,
+	url:setting.url,
+	address:{},//地址信息
+	isAree:true,
+	showPage:false,
+	showCont:true
+	form:"",
+	goback:0,
+	company_name:"",
+	legal_person:"",
+	bussiness_licence_numbe:"",
+	company_address:"",
+	companyTypes:[
+	{ id:0,name:股份有限公司"}
+	{ id:1,name:"个人独立企业"}
+	{ id:1,namehttps://detail.1688.com/offer/551626273910.html?spm=a262eq.13663660.k488ts0q.1.774b406cu1Jc4v:":"
+	
+	
+	companyType:-1,
+	
+	onLoad:function(options){
+		if(option.flag === "1"){
+			this.setDate({showPage:true})
+
+	onload:FUNCTIPON
+}
+}
+]
+	
+})
+}
+
+

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function test(a){
+            let p = new Promise(function(resolve,reject){
+                setTimeout(function(){
+                    if(a>1){
+                        resolve(a)
+                    }else{
+                        reject('报错')
+                    }
+                },1000)
+            })
+            return p
+        }
+        test(0).then(function(res){
+            console.log(res)
+        }).catch(function(res){
+            console.log(res)
+        })  
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <textarea id="express_sn">45454545454</textarea>
+    <button id="copy">点击复制</button>
+    <script>
+        $("#copy").on("click",function () {
+                var express_sn = $("#express_sn");
+                express_sn.select();
+                document.execCommand("copy"); // 执行浏览器复制命令,'copy'为系统参数，不得修改
+            });
+    </script>
+</body>
+</html>

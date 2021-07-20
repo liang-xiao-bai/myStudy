@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click='destroyed'>销毁</button>
+        <son v-if='flag'></son>
+    </div>
+    <script>
+        const sonTwo = {
+            template:`
+                <div>
+                    {{message}}
+                    <button @click='changeMsg'>子组件点击</button>
+                </div>
+            `,
+            props:['message'],
+            data(){
+                return {
+                    msg:'我是子组件2'
+                }
+            },
+            methods:{
+                changeMsg(){
+                    this.msg = '子组件改变2'
+                }
+            },
+            beforeCreate(){
+                console.log("子组件2beforeCreate")
+            },
+            created(){
+                console.log("子组件2created")
+            },
+            beforeMount(){
+                console.log("子组件2beforeMounte")
+            },
+            mounted(){
+                console.log("子组件2mounted")
+            },
+            beforeUpdate(){
+                console.log("子组件2beforeUpdate")
+            },
+            updated(){
+                console.log("子组件2updated")
+            },
+            beforeDestroy(){
+                console.log("子组件2beforeDestroy")
+            },
+            destroyed(){
+                console.log("子组件2destroyed")
+            },
+        }
+        const sonOne = {
+            template:`
+                <div>
+                    {{message}}
+                    <button @click='changeMsg'>子组件点击</button>
+                </div>
+            `,
+            props:['message'],
+            data(){
+                return {
+                    msg:'我是子组件'
+                }
+            },
+            methods:{
+                changeMsg(){
+                    this.msg = '子组件改变'
+                }
+            },
+            beforeCreate(){
+                console.log("子组件beforeCreate")
+            },
+            created(){
+                console.log("子组件created")
+            },
+            beforeMount(){
+                console.log("子组件beforeMounte")
+            },
+            mounted(){
+                console.log("子组件mounted")
+            },
+            beforeUpdate(){
+                console.log("子组件beforeUpdate")
+            },
+            updated(){
+                console.log("子组件updated")
+            },
+            beforeDestroy(){
+                console.log("子组件beforeDestroy")
+            },
+            destroyed(){
+                console.log("子组件destroyed")
+            },
+        }
+        const son = {
+            template:`
+                <div >
+                    {{msg}}
+                    <button @click='change_msg'>点击</button>
+                    <son-one :message='message'></son-one>
+                    <son-two :message='message'></son-two>
+                </div>
+            `,
+            data(){
+                return {
+                    msg:"",
+                    message:"我是子组件"
+                }
+            },
+            beforeCreate(){
+                console.log("父组件beforeCreate")
+            },
+            created(){
+                console.log("父组件created")
+            },
+            beforeMount(){
+                console.log("父组件beforeMounte")
+            },
+            mounted(){
+                console.log("父组件mounted")
+            },
+            beforeUpdate(){
+                console.log("父组件beforeUpdate")
+            },
+            updated(){
+                console.log("父组件updated")
+            },
+            beforeDestroy(){
+                console.log("父组件beforeDestroy")
+            },
+            destroyed(){
+                console.log("父组件destroyed")
+            },
+            methods:{
+                change_msg(){
+                    this.message = 'test msg'
+                }
+            },
+            components:{ sonOne,sonTwo }
+        }
+        new Vue({
+            el:"#app",
+            data:{
+                flag:true,
+            },
+            methods:{
+                destroyed(){
+                    this.flag = !this.flag
+                }
+            },
+            components:{ son }
+        })
+    </script>
+</body>
+</html>

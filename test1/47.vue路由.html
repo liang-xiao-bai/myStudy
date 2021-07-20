@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div>
+        <div>1111</div>
+        <div id="app">
+            <li v-for='(item,i) in arr'><input type="checkbox"  :checked='item' @change='fn(i)'>{{i}}</li>
+            <input type="checkbox" v-model='flag'>全选
+        </div>
+    </div>
+    <script>
+        const newApp = {
+            template: '<li>这是个待办项</li>'
+        }
+        new Vue({
+            el:'#app',
+            data:{
+                arr:[false,false,false,false],
+                flag:false
+            },
+            methods:{
+                fn(index){
+                    this.arr.splice(index,1,!this.arr[index])
+                    console.log(this.arr)
+                    let a = this.arr.some((item,i)=>{
+                        return item===false
+                    })
+                    if(a){
+                        this.flag = false
+                    }else{
+                        this.flag = true
+                    }
+                    
+                }
+            }
+        })
+    </script>
+</body>
+</html>

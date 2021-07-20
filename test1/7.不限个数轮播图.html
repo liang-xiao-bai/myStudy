@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>轮播</title>
+		<style type="text/css">
+			button{
+				margin-left: 50%;
+			}
+			*{
+				padding: 0px;
+				margin: 0px;
+				
+			}
+			.top_blast:after{
+				content: " ";
+				display: table;
+				clear: both;
+			}
+			
+			
+			ul a img{
+				width: 600px;
+			}
+			ul{
+				
+				list-style: none;
+				position: absolute;
+			}
+			ul li{
+				float: left;
+				margin-right: 10px;
+			}
+			#kuang{
+				width: 600px;
+				border: 2px solid black;
+				margin: 50px auto;
+				position: relative;
+			}
+			
+
+		</style>
+	</head>
+	<body>
+		<button id="right">右移</button>
+		<br  /><br  />
+		<div id="kuang" class="top_blast">
+			<ul class="top_blast">
+				<li class="photo"><a href="#"><img src="img/1.png" /></a></li>
+				<li class="photo"><a href="#"><img src="img/2.png" /></a></li>
+				<li class="photo"><a href="#"><img src="img/3.png" /></a></li>
+				<li class="photo"><a href="#"><img src="img/4.png" /></a></li>
+			</ul>
+			
+		</div>
+		<script type="text/javascript">
+			var middle_image = document.getElementsByClassName("photo");
+			var count = middle_image.length;
+			var one_width = parseInt(getComputedStyle(middle_image[1], null)["width"]);
+			var middle_len = count*(one_width+10);
+			
+			var ul_biao = document.getElementsByTagName("ul");
+			ul_biao[0].style.width = middle_len + "px";
+			var image_height = ul_biao[0].offsetHeight;
+			var box = document.getElementById("kuang")
+			box.style.height = image_height+"px";
+			
+		
+			var right_button = document.getElementById("right");
+			var index = 1;
+			
+			var speed;
+			var timer;
+			
+			right_button.onclick=function(){
+				var num = parseInt(ul_biao[0].offsetLeft);
+			if (num%610==0){
+				if(index==1){
+					var speed = 50;
+					var middle = 0
+					timer=setInterval(function(){
+						var now_pos = parseInt(ul_biao[0].offsetLeft);
+						if(middle >= (count-1)*610-50){
+							speed = ((count-1)*610)%50;
+							clearInterval(timer);
+						}
+						ul_biao[0].style.left = now_pos - speed + "px";
+						now_pos = parseInt(ul_biao[0].offsetLeft);
+						middle += speed;
+					
+					}, 50);
+					index = count;
+					
+				}else{
+					var speed = 20;
+					var middle = 0;
+					timer=setInterval(function(){
+						var now_pos = parseInt(ul_biao[0].offsetLeft);
+						if(middle >= 600){
+							speed = 10;
+							clearInterval(timer);
+						}
+						ul_biao[0].style.left = now_pos + speed + "px";
+						middle += speed;
+					
+					}, 50);
+					index -= 1;	
+				}
+				
+			}
+			}
+		</script>
+	</body>
+</html>

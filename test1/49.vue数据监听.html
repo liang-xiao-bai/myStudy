@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="arr[0]">
+        <p>{{arr[0]}}</p>
+        <p>{{show()}}</p>
+        <p>{{obj.a+'11111'}}</p>
+        <button @click="fn">点击改变</button>>
+        <div @click='fn1' class="new">
+            1111111
+        </div>
+        <input type="checkbox" v-model='select'>
+        <input type="text" ref='input'>
+        <input type="text" ref='input'>
+        <input type="text" ref='input'>
+        <select name="" id="" ref='store' v-for='item in [1,2,3]'>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+        <button @click='fn2'>下拉框</button>
+        <div v-for='item in newArr'>
+            <div>{{item.name}}</div>
+            <div>{{item.falg}}</div>
+            <input type="checkbox" v-model='item.falg' @click='change'>
+        </div>
+        <div>
+            <div>{{allselect.falg}}</div>
+            <input type="checkbox" v-model='allselect.falg'>全选
+            <input type="checkbox" v-model='all_select' @click='all_select_change'>全选2
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                arr:[1,2,3,4,5],
+                obj:{},
+                a:3,
+                b:4,
+                select:true,
+                newArr:[],
+                allselect:{
+                    falg:false
+                },
+                all_select:false
+            },
+            created(){
+                this.getList()
+            },
+            methods:{
+                show(){
+                    console.log(1)
+                    console.log(2)
+                },
+                fn(){
+                    this.a = 5
+                    this.b = 6 
+                    console.log(this.arr)
+                    console.log('在这里')
+                    console.log(this.$refs.input)
+                    console.log(this.$refs.input.value)
+                },
+                fn1(e){
+                    console.log(e.target.className)
+                },
+                fn2(){
+                    console.log(this.$refs['store'])
+                    console.log(this.$refs.store[1].value)
+                },
+                change(){
+                    this.newArr[0].falg = !this.newArr[0].falg
+                    console.log(this.newArr[0].falg)
+                },
+                getList(){
+                    let arr = [{name:'xixi'}]
+                        arr.forEach(item=>{
+                            item.falg = false
+                        })
+                    this.newArr = arr
+                },
+                all_select_change(){
+                    console.log(this.all_select)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- <p>{{msg}}</p> -->
+        <!-- <p>{{a}}</p> -->
+        <new-app></new-app>
+        <!-- <input type="checkbox" value="1" v-model="checked" /> -->
+        <!-- <p>{{checked}}</p> -->
+        <!-- <input type="checkbox" v-model="toggle" true-value="yes" false-value="no"> -->
+        <!-- <p>{{toggle}}</p> -->
+        <input type="checkbox" :checked='checked' @change='fn'>
+    </div>
+    <script>
+        const newApp = {
+            template: '<li>这是个待办项</li>'
+        }
+        new Vue({
+            el:'#app',
+            data:{
+                msg:'我成功了',
+                checked:false,
+                toggle:''
+            },
+            components:{newApp},
+            computed:{
+                a(){
+                    return '我是a'
+                }
+            },
+            methods:{
+                fn(){
+                    this.checked = !this.checked
+                    console.log(this.checked)
+                }
+            },
+            filters: { 
+            // 时间过滤器
+                dCreateTime(value) {
+                    var newValue = value*1000
+                    var date = new Date(parseInt(newValue));
+                    var Y = date.getFullYear() + '/';
+                    var M = (date.getMonth()+1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '/';
+                    var D = date.getDate();
+                    // var h = date.getHours() + ':';
+                    // var m = date.getMinutes() + ':';
+                    // var s = date.getSeconds();
+                    var df = Y+M+D;
+                    return df;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

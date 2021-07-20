@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图实现</title>
+    <style type="text/css">
+        .boxParent{
+            width: 50%;
+            height: 246px;
+            overflow: hidden;
+
+        }
+        .boxParent .box{
+            width: 80%;
+            height: 246px;
+
+        }
+        .box1{
+            display: block;
+            background-color: pink;
+        }
+        .box2{
+            background-color: red;
+        }
+        .box3{
+            background-color: blue;
+        }
+        .box4{
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+<div class="boxParent">
+    <div class="box box1"></div>
+    <div class="box box2"></div>
+    <div class="box box3"></div>
+    <div class="box box4"></div>
+    <div class="box box1"></div>
+</div>
+</body>
+<script type="text/javascript">
+    // 核心思想，控制第一个盒子网上移动，那么其余盒子就会跟着移动
+    let oDiv=document.getElementsByClassName("box")
+    let allHeight = getComputedStyle(oDiv[0]).height
+    let evHeight = parseInt(allHeight)/5
+    let i = 0
+    let timer = null
+    let flag = false
+    function ChangeImg() {
+        console.log(`我是${i}`)
+        if (i>(oDiv.length-1)*5) {
+            // 初始化回到第一张图片
+            oDiv[0].style.marginTop = '0px'
+            // 初始化标志
+            flag = true
+            i = 0
+        }else{
+            // 图片每次向上移动的距离
+            oDiv[0].style.marginTop = -evHeight*i+"px"
+        }
+        if ((i%5)===0) {
+            clearInterval(timer)
+            if(flag){
+                // 如果是初始化，那么图片不作停留
+                timer = setInterval(ChangeImg,100);
+                flag = false
+            }else{
+                // 如果不是初始化，图片停留2s
+                setTimeout(()=>{
+                timer = setInterval(ChangeImg,100);
+                },2000)
+            }
+        }
+        i++
+    }   
+    timer = setInterval(ChangeImg,100);
+</script>
+</html>

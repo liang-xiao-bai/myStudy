@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图实现</title>
+    <style type="text/css">
+
+        /*标题样式*/
+        p{
+            text-align: center;
+            font-size: 25px;
+            color: cadetblue;
+            font-family: fantasy;
+
+        }
+
+        .imgBox{
+            border-top: 2px solid cadetblue;
+            width: 50%;
+            height: 500px;
+            margin: 0 auto;
+            border: 1px solid black;
+
+        }
+
+        .imgBox div{
+            width: 100%;
+            height: 300px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border: 1px solid black;
+
+        }
+        .imgBox div:first-child{
+            display: inline-block;
+        }
+        .imgBox div:nth-child(n+2){
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<p>图片轮播</p>
+<div class="imgBox">
+    <div class="box">111111111</div>
+    <div class="box">222222222</div>
+    <div class="box">333333333</div>
+    <div class="box">444444444</div>
+    <div class="box">555555555</div>
+</div>
+</body>
+<script type="text/javascript">
+    var index=0;
+    //改变图片
+    function ChangeImg() {
+        index++;
+        console.log(index)
+        var a=document.getElementsByClassName("box");
+        if(index>=a.length) index=0;
+        for(var i=0;i<a.length;i++){
+            a[i].style.display='none';
+        }
+        a[index].style.display='block';
+    }
+    //设置定时器，每隔两秒切换一张图片
+    setInterval(ChangeImg,3000);
+</script>
+</html>

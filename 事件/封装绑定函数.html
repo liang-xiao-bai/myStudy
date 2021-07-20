@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <ul id="parent">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <div>
+                我是一个混子盒子
+            </div>
+        </ul>
+    </div>
+    <script>
+        let oUl = document.querySelector('#parent')
+        // oUl.addEventListener('click',function(e){
+        //     if(e.target.nodeName === 'LI'){
+        //         console.log(this)
+        //         console.log(e.target.innerHTML)
+        //     }
+        // })
+
+        // 普通绑定
+        // function bindEvent(ele,type,func){
+        //     ele.addEventListener(type,func)
+        // }
+        // bindEvent(oUl,'click',function(){
+        //     console.log(this,'ul')  
+        // })
+        // 代理绑定
+        function bindEvent(ele,type,selector,fn){
+            if(!fn){
+                fn = selector
+                selector = null
+            }
+            ele.addEventListener(type,function(e){
+                if(selector){
+                    if(e.target.nodeName === selector){
+                        fn.call(this)
+                    }
+                }else{
+                    fn.call(this)
+                }
+            })
+        }
+        bindEvent(oUl,'click','LI',function(){
+            console.log(this)
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+
+        alert(str);//因为没有定义str，所以浏览器会出错，下面的不能运行
+  
+        alert("我是代码块一");//没有运行到这里
+  
+        var test = "我是代码块一变量";
+  
+  </script>
+  <script type="text/javascript">
+
+    alert("我是代码块二"); //这里有运行到
+
+    alert(test); //弹出"我是代码块一变量"
+
+</script>
+</body>
+</html>

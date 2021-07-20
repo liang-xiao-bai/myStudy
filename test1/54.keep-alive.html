@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <keep-alive>
+            <Test v-if='flag'></Test>
+            <Testt v-if="!flag"></Testt>
+        </keep-alive>
+        <button @click='fn'>点击</button>
+    </div>
+    <script>
+        const Test = {
+            template:`
+            <div>
+                <input type="text">
+            </div>
+            `
+        }
+        const Testt = {
+            template:`
+            <div>
+                <input type="text">
+            </div>
+            `
+        }
+        new Vue({
+            el:'#app',
+            data:{
+                flag:true
+            },
+            components:{Test,Testt},
+            methods:{
+                fn(){
+                    this.flag = !this.flag
+                }
+            }
+        })
+    </script>
+</body>
+</html>

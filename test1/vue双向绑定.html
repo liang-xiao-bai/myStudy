@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!-- <div>
+        <div id="app">
+            <input type="text" v-model='msg' @input='fn' placeholder="测试测试">
+        </div>
+    </div> -->
+    <div>
+        <div id="app">
+            <input type="text" :value='msg' @blur='fn' placeholder="测试测试">
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                msg:''
+            },
+            methods:{
+                fn(e){
+                    console.log(e.target.value)
+                    let value = e.target.value
+                    if(value>8){
+                        this.msg = ''
+                    }else{
+                        this.msg = value
+                    }
+                    this.$forceUpdate()  //如果加中间变量value，需要强制刷新组件（vue 强制刷新组件）
+                }
+            }
+        })
+    </script>
+</body>
+</html>

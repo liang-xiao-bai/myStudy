@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./JS/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <my-son @test-click='testClik' ref='son'></my-son>
+        </div>
+    </div>
+    <script>
+        const mySon = {
+            template:`
+                <div>
+                    <p>我是子组件</p>
+                    <button @click='testClik'>text</button>
+                </div>
+            `,
+            methods:{
+                testClik(){
+                    this.$emit('test-click')
+                }
+            }
+        }
+        new Vue({
+            el:'#app',
+            components:{
+                mySon
+            },
+            data:{
+                msg:'模板'
+            },
+            methods:{
+                testClik(){
+                    console.log('子组件调用')
+                }
+            }
+        })
+    </script>
+</body>
+</html>

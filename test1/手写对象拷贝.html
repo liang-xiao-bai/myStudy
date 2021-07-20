@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function clone(obj){
+            // 判断是不是null
+            if(obj === null){
+                return null
+            }
+            // 判断是不是对象类型
+            if(typeof obj != 'object'){
+                return obj
+            }
+            // 判断是数组还是对象
+            let newObj = obj.constructor === Array ? [] : {}
+            for(let key in obj){
+                if(typeof obj[key] === 'object'){
+                    newObj[key] = clone(obj[key])
+                }else{
+                    newObj[key] = obj[key]
+                }
+            }
+            return newObj
+        }
+        let obj1 = {
+            name: 'shen',
+            show: function (argument) {
+            }
+        }
+        let obj2 = clone(obj1)
+            obj2.name = 'xiuer'
+        console.log(obj1)
+        console.log(obj2)
+    </script>
+</body>
+</html>

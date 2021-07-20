@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span class="joind">135</span>天<span class="joinh">7</span>时<span class="joinm">46</span>分<span class="joins">25</span>秒
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var setTimer = null;
+        var chazhi = 0;
+ //差值计算
+ //例子(模拟)
+        // chazhi = 86400000;
+ //真实时间(注意月份需减掉1，否则时间会计算错误)
+ //chazhi = (new Date(year,month-1,day,hour,minute,second)) - (new Date()); //计算剩余的毫秒数
+ //chazhi = (new Date(2018,8-1,6,6,6,6)) - (new Date());
+  
+ //执行函数部分
+        countFunc(chazhi);
+        setTimer = setInterval(function() {
+            // chazhi = chazhi - 1000;
+            let nowTime = new Date()
+            console.log(nowTime)
+            let futureTime = new Date('2020/06/24')
+            console.log(futureTime)
+            chazhi = (futureTime-nowTime)
+            countFunc(chazhi);
+        }, 1000);
+        function countFunc(leftTime) {
+            if(leftTime >= 0) {
+            var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数 
+            var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时 
+            var minutes = parseInt(leftTime / 1000 / 60 % 60, 10); //计算剩余的分钟 
+            var seconds = parseInt(leftTime / 1000 % 60, 10); //计算剩余的秒数 
+            days = checkTime(days);
+            hours = checkTime(hours);
+            minutes = checkTime(minutes);
+            seconds = checkTime(seconds);
+            $(".joind").html(days);
+            $(".joinh").html(hours);
+            $(".joinm").html(minutes);
+            $(".joins").html(seconds);
+            } else {
+            clearInterval(setTimer);
+            $(".joind").html("00");
+            $(".joinh").html("00");
+            $(".joinm").html("00");
+            $(".joins").html("00");
+        }
+        }
+        function checkTime(i) { //将0-9的数字前面加上0，例1变为01 
+            if(i < 10) {
+                i = "0" + i;
+            }
+                return i;
+            }
+    </script>
+</body>
+</html>

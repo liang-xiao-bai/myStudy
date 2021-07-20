@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="select">0</div>
+        <div class="select">1</div>
+        <div class="select">2</div>
+        <div class="select">3</div>
+    </div>
+    <script>
+        // let a = 1;
+        // (()=>{
+        //     alert(a)
+        // })()
+        // var a = 1;
+        // (function(){
+        //     alert(a)
+        // })()
+        // 立即执行函数的作用
+        let oDiv =document.getElementsByClassName('select')
+        for(var i=0; i<oDiv.length; i++){
+            (function(i){
+                oDiv[i].onclick = function(){
+                console.log(i)
+            }
+            }(i))
+        }
+    </script>
+</body>
+</html>

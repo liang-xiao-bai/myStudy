@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        new Promise((resolve,reject)=>{
+            console.log(1)
+            resolve('success')
+            console.log(2)
+            reject(new Error('错误'))
+            console.log(3)
+        }).then(data=>console.log(data),error=>console.log(error))
+        // new Promise((resolve,reject)=>{
+        //     reject(new Error('错误'))
+        //     resolve('success')
+        // }).then(data=>console.log(data),error=>console.log(error))
+    </script>
+</body>
+</html>

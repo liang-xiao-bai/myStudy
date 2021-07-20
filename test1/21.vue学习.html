@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <keepalive>
+        <div id="app">
+            <!-- <p>{{msg}}</p> -->
+            <!-- <p>{{a}}</p> -->
+            <keep-alive>
+                <new-app></new-app>
+            </keep-alive>
+            <!-- <input type="checkbox" value="1" v-model="checked" /> -->
+            <!-- <p>{{checked}}</p> -->
+            <!-- <input type="checkbox" v-model="toggle" true-value="yes" false-value="no"> -->
+            <!-- <p>{{toggle}}</p> -->
+            <input type="checkbox" :checked='checked' @change='fn'>
+            <a href="https://www.baidu.com/">跳转</a>
+        </div>
+    </keepalive>
+    <script>
+        const newApp = {
+            template: '<li>这是个待办项</li>',
+
+            created(){
+                console.log('子组件创建')
+            },
+            mounted(){
+                console.log('子组件挂载')
+            }
+        }
+        new Vue({
+            el:'#app',
+            data:{
+                msg:'我成功了',
+                checked:false,
+                toggle:''
+            },
+            components:{newApp},
+            computed:{
+                a(){
+                    return '我是a'
+                }
+            },
+            methods:{
+                fn(){
+                    this.checked = !this.checked
+                    console.log(this.checked)
+                }
+            },
+            created(){
+                console.log('组件创建')
+            },
+            mounted(){
+                console.log('组件挂载')
+            }
+        })
+    </script>
+</body>
+</html>

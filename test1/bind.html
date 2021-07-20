@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function foo (a,b,c){
+            console.log(a,b,c)
+        }
+        let foo2 = foo.bind(null,1,2,3)
+        foo2(4,5,6)  //重新传入参数无效，只能用原来的参数
+    </script>
+</body>
+</html>

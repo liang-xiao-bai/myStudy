@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <ul>
+        <li><input type="checkbox" class="select">1</li>
+        <li><input type="checkbox" class="select">2</li>
+        <li><input type="checkbox" class="select">3</li>
+        <li><input type="checkbox" class="select">4</li>
+        <li><input type="checkbox" class="select">5</li>
+    </ul>
+    <input type="checkbox" class="all">全选
+    <script>
+        $('.select').on('change',function(){
+            console.log($('.select:checked').length)
+            console.log($('.select').length)
+            if($('.select:checked').length===$('.select').length){
+                console.log('全选')
+                $('.all').attr('checked',true)
+            }else{
+                console.log('取消全选')
+                $('.all').attr('checked',false)
+            }
+        })
+    </script>
+    <!-- <input type="text" class="in">
+    <script>
+        $('.in').on('keyup',function(e){
+            if(e.keyCode===13){
+                console.log('enter')
+            }
+        })
+    </script> -->
+</body>
+</html>

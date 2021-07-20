@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function *foo(){
+            console.log(1)
+            const back = yield 100
+            console.log(back)
+            yield 200
+        }
+
+        let generator = foo()
+        console.log(generator.next('bar'))
+        console.log(generator.next('bar'))
+        console.log(generator.next('bar'))
+    </script>
+</body>
+</html>

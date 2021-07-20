@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent{
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+            /* position: relative; */
+        }
+        .box{
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            /* position: absolute; */
+            /* left: 50%; */
+            /* top: 50%; */
+            transform: translate(50%,50%);
+        }
+        .box1{
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            /* transform: translate(100px,250px); */
+        }
+        .box2{
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            /* transform: translate(100px,250px); */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="box2">
+        </div>
+        <div class="box">
+        </div>
+        <div class="box1">
+        </div>
+    </div>
+</body>
+</html>

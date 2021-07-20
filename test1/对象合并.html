@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let obj1 = {
+            a:{
+                name:'lihua',
+                age:'18'
+            },
+            b:{
+                name:'xiaohong',
+                age:'20',
+                hobit:{
+                    first:'paly5',
+                    second:'play2',
+
+                }
+            },
+            c:'meiyou'
+        }
+
+        let obj2 = {
+            a:{
+                name:'zhangsan',
+                age:'18'
+            },
+            b:{
+                name:'xiaohong',
+                age:'16',
+                hobit:{
+                    first:'palyone',
+                    second:'playtwo',
+                    third:'play3'
+                }
+            }
+        }
+        Object.assign(obj1,obj2)
+        console.log(obj1)
+    </script>
+</body>
+</html>

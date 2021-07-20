@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function deepCopy(obj) {
+            if(obj === null){
+                return null
+            }
+            let newobj = obj.constructor === Array ? [] : {};
+            if (typeof obj != 'object') {
+                return obj;
+            }else {
+                for (let i in obj) {
+                    if (typeof obj[i] === 'object'){ //判断对象的这条属性是否为对象
+                    newobj[i] = deepCopy(obj[i]);  //若是对象进行嵌套调用
+                    }else{
+                        newobj[i] = obj[i];
+                        }
+                    }
+                }
+                return newobj; //返回深度克隆后的对象
+        }
+        let obj1 = {
+            name: 'shen',
+            show: function (argument) {
+            }
+        }
+        let obj2 = deepCopy(obj1)
+        console.log(obj2)
+
+        // let arr = [1,2,3,4,5,6]
+        // console.log(arr.constructor === Array)
+        // let obj3 = {
+        //     a:1,
+        //     b:2
+        // }
+        // console.log('a' in obj3)
+        // console.log(obj3.constructor === Object)
+        // console.log(("a" in window),'1111111')
+        // if (!("a" in window)) {
+        //     var a = 1;
+        // }
+        // console.log(a)
+    </script>
+</body>
+</html>

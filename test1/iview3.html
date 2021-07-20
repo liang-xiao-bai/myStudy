@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<!-- 
+ 作者：wallimn
+ 博客：http://wallimn.iteye.com
+ 时间：2017-11-22
+ -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iview菜单示例</title>
+    <link rel="stylesheet" type="text/css" href="iview/styles/iview.css">
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/view-design/dist/styles/iview.css">
+    <script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
+    <script type="text/javascript" src="http://unpkg.com/view-design/dist/iview.min.js"></script>
+
+</style>
+</head>
+<body>
+<div id="app2">
+    <i-menu mode="horizontal" :theme="menuTheme" active-name="1" @on-select="onMenuSelect">
+        <Menu-Item name="1">
+            <Icon type="ios-paper"></Icon>时事新闻
+        </Menu-Item>
+        <Menu-Item name="2">
+            <Icon type="ios-people"></Icon>时事评论
+        </Menu-Item>
+        <Submenu name="3">
+            <template slot="title">
+                <Icon type="stats-bars"></Icon>特邀专家
+            </template>
+            <Menu-Group title="国际专家">
+                <Menu-Item name="3-1">张无忌</Menu-Item>
+                <Menu-Item name="3-2">赵　敏</Menu-Item>
+                <Menu-Item name="3-3">张三丰</Menu-Item>
+            </Menu-Group>
+            <Menu-Group title="国内专家">
+                <Menu-Item name="3-4">萧　峰</Menu-Item>
+                <Menu-Item name="3-5">虚　竹</Menu-Item>
+            </Menu-Group>
+        </Submenu>
+        <Menu-Item name="4">
+            <Icon type="settings"></Icon>http://wallimn.iteye.com
+        </Menu-Item>
+    </i-menu>
+    <br>
+    <p>修改主题</p>
+    <Radio-Group v-model="menuTheme">
+        <Radio label="light"></Radio>
+        <Radio label="dark"></Radio>
+        <Radio label="primary"></Radio>
+    </Radio-Group></div>
+
+	<script type="text/javascript">
+		var vue = new Vue({
+			el:'#app2',
+			data:function(){
+				return {
+	            	menuTheme: 'primary'
+				};
+	        },
+	        methods:{
+	            onMenuSelect:function(name){
+	            	console.log(name," is clicked!");
+	            	if(name==="4"){
+	            		window.location.href='http://wallimn.iteye.com';
+	            	}
+	            }
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>换算器</title>
+</head>
+<body>
+	<div>
+		可视区宽度：<input type="text" id="gao-width" value="1920">px<br>
+		可视区高度：<input type="text" id="gao-height" value="1080">px<br>
+		<hr>
+		<hr>
+		量出的宽度：<input type="text" id="width" value="1">px<br>
+		量出的高度：<input type="text" id="height" value="1">px<br>
+		<button id="button">换算</button><br>
+		结果宽度：<span class="result-w"></span>&nbsp;&nbsp;&nbsp;vw
+		<br>
+		结果高度：<span class="result-h"></span>&nbsp;&nbsp;&nbsp;vh
+	</div>
+	<script type="text/javascript">
+		let result1;
+		let result2;
+		let button1 = document.getElementById("button");
+		button1.onclick = function(){
+			let measureTheWidth = document.getElementById("width").value,
+				measureTheHeight = document.getElementById("height").value,
+				draftWidth = document.getElementById("gao-width").value,
+				draftHeight = document.getElementById("gao-height").value;
+			result1 = (100/Number(draftWidth)*Number(measureTheWidth)).toFixed(2);
+			result2 = (100/Number(draftHeight)*Number(measureTheHeight)).toFixed(2);
+			document.getElementsByClassName("result-w")[0].innerText=result1;
+			document.getElementsByClassName("result-h")[0].innerText=result2;
+			console.log(result1,result2)
+		};
+	</script>
+</body>
+</html>

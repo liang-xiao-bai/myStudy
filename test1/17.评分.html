@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./iconfont.css">
+    <style>
+        .box1{
+            position: relative;
+        }
+        .box1>span{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: blue;
+        }
+        .box2{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 70px;
+            height: 20px;
+            overflow: hidden;
+        }
+        .box2>span{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: pink;
+        }
+        .iconfont{
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1">
+        <span></span>
+        <span></span>
+        <span></span>
+        <div class="box2" style="width: 25px;">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <div>
+        <span class="iconfont icon-pingfenxingxing"></span>
+        <span class="iconfont icon-pingfenxingxing"></span>
+        <span class="iconfont icon-pingfenxingxing"></span>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <ul id="parent">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <div>
+                6666666
+            </div>
+        </ul>
+    </div>
+    <script>
+        function bindEvent(ele,type,fn,node){
+            ele.addEventListener(type,(e)=>{
+                if(node){
+                    if(e.target.nodeName === 'LI'){
+                        fn.call()
+                    }
+                }else{
+                    fn.call()
+                }
+            })
+        }
+        let ele = document.querySelector('#parent')
+        bindEvent(ele,'click',fn,'LI')
+        function fn(){
+            console.log(this)
+        }
+    </script>
+</body>
+</html>

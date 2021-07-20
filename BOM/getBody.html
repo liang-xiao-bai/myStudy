@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app" ref='content'>
+        <div ref='content'>
+        </div>
+        <button @click='get_html'>获取页面内容</button>
+    </div>
+    
+</body>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            content:''
+        },
+        created(){
+            this.content = `&lt;div&gt;
+                &lt;p style=&quot;color: red;&quot;&gt;邮件标题&lt;/p&gt;
+                &lt;p&gt;邮件内容&lt;/p&gt;
+            &lt;/div&gt;`
+        },
+        methods:{
+            get_html(){
+                let str = this.HTMLDecode(this.content)
+                this.$refs.content.innerHTML = str
+            },
+            // HTML编码
+            HTMLDecode:function(text){
+                var temp = document.createElement("div"); 
+                temp.innerHTML = text; 
+                console.log(temp.innerText,'1111')
+                console.log(temp.textContent,'2222')
+                var output = temp.innerText || temp.textContent; 
+                temp = null; 
+                return output; 
+            }
+        }
+    })
+</script>
+</html>

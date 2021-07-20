@@ -1,0 +1,314 @@
+jQuery基础知识
+$()选择元素时为隐式迭代
+对象的变量值可以是变量
+
+对象转换
+1、DOM转JQ
+$(DOM对象)
+2、JQ转DOM对象
+$(DOM对象)[0]
+$(DOM对象).get[0]
+
+筛选方法
+$(this)当前元素
+parent()查找父级
+parents()查找所有父级元素
+children(selector)查找亲儿子，相当于子代选择器
+find()相当于后代选择器
+siblings()查找兄弟元素，不包括自己
+hasClass()判断是否含有特定的类，返回为布尔值
+eq(index)根据下标查找元素
+$(this).index()得到当前元素的索引号 在本父元素下
+:checked 选择器 被选中复选框的数组 取其长度就为个数
+
+修改样式
+1、css()方法 只写属性名 返回的是属性值
+css("","")普通的格式，属性名要加引号，属性值如果为数字可以不加引号
+css({})对象的格式 以对象格式里面属性名可以不加引号 复合属性用驼峰命名法 多个样式用逗号分割
+2、修改类
+addClass()添加类
+removeClass()删除类
+toggleClass()切换类
+
+
+效果（有回调函数）
+show()显示效果，参数可以省略，里面参数可以填写时间，还可以填写回调函数，一般情况下都不加参数，里面添加回调函数是效果执行完成之后再运行的函数
+hide()隐藏效果
+toggle()切换效果
+slidDown()下拉效果
+slideUp()上拉效果
+slideToggle()切换效果
+
+事件切换事件
+hover（function(){},function(){}）第一个参数是鼠标经过的回调函数，第二个参数是鼠标离开的回调函数；如果只写一个函数，那么两个事件都会触发这个函数
+
+动画或效果队列
+动画或者效果队列一旦触发就会执行，如果多次触发，就会造成多个动画或者效果排队执行
+stop()停止上一个动画，解决动画排队的问题 写在动画的前面
+动画之前都加stop()
+
+淡入淡出效果（有回调函数）
+fadeIn()淡入效果，参数可以省略，里面参数可以填写时间
+fadeOut()淡出效果
+fadeToggle()切换效果
+fadeTo([[speed],opacity,[easing],[fn]])修改透明度，速度和透明度必须写
+opacity：透明度必须写，取值0-1之间。
+speed：三种预定的速度之一的字符串（“”，“”，“，”，“”）
+easing：用来指定切换效果，默认是“swing”，可用参数“linear”
+自定义动画
+animate() 有回调函数
+params：想要更改的样式属性，以对象形式传递，必须写
+speed：速度
+easing：切换效果
+fn(){}
+
+属性操作
+1、prop("属性名")获取元素固有属性值
+   prop("属性名",属性值)修改属性值
+2、attr()获取元素自定义属性值 类似于原生getAttribute()
+3、date()方法可以在指定的元素上存取数据，DOM直接看看不到 里面的数据是存放在元素的内存里面，可以H5里面的自定义属   性 返回的是数据型
+
+内容操作
+html()获取设置元素内容
+text()获取设置文本内容
+val()获取设置表单值
+toFixed(n)保留n位小数
+
+函数终止条件可以使用return
+
+表单通常使用change事件
+
+元素操作
+jQuery隐式迭代是对同一元素做了同样的操作。如果想要给同一元素做不同的操作，就需要遍历。
+1、each(function(index,domEle){})，回调函数第一个参数为回调函数，第二个参数为DOM元素对象，使用jQuery时需要转换     $(domEle)
+2、$.each() 方法遍历元素，主要用于遍历数据，处理数据，比如用来遍历数组
+   $.each(arr,function(i,ele){})
+创建元素
+$("<li></li>")
+添加元素
+1、内部添加（父子关系）
+append()放在匹配元素内部的后面
+prepend()放在匹配元素内部的前面
+2、外部添加（兄弟关系）
+after()放在匹配元素的后面
+before()放在匹配元素的前面
+3、删除元素
+remove()删除匹配元素 本身
+empty()删除匹配元素的子节点 孩子
+html("")删除匹配元素的子节点 孩子
+
+尺寸
+width()/height() 取得匹配元素的宽度和高度，添加参数，里面直接添加数字 不包括padding和margin 参数可以不用写单位
+innerWidth()/innerHeight() ......包括padding
+outerWidth()/outerHeight() ......包括padding、border
+outerWidth(true)/outerHeight(true) ......包括padding、border、margin
+
+位置
+1、offset() 设置或返回元素相对于文档的偏移坐标，跟父级没有关系，填写里面的参数（对象）可以修改距离
+2、position()获取距离带有定位父级位置 如果没有带有定位的父级元素，则以文档为准，只能获取，不能设置偏移
+
+被卷去的头部
+$(document).scrollTop()被卷去的头部，可以添加参数
+scrollLeft()被卷去的左侧
+带有动画的返回顶部 元素才有动画
+设置里面的参数为{scrollTop:0}
+对body和html进行操作，即$(body,html)，元素才能做动画，文档不可以做动画
+$(body,html).stop().animate({scrollTop:0})
+$(window).scroll()页面滚动事件
+互斥锁
+定义let flag=true 在自定义动画的回调函数中打开
+
+
+jQuery事件
+事件委托，能够动态地删除事件
+on可以进行事件委派操作
+$("ul").on("click","li",function(){})
+事件绑定
+1、绑定一个事件
+on(type,fn(){})
+2、绑定多个事件
+on({click:function(){},......})
+事件解绑
+1、解绑所有事件
+ele.off()
+2、解绑某一个事件
+ele.off(type)
+3、解除时间委托
+$("ul").off("click","li")
+4、自动触发事件
+$("div").click()
+$(""div).trigger("click") 不会触发元素默认行为 比如表单获得焦点事件 不会出现光标
+$(""div).triggerHandler("click")
+5、one(type,fn(){}) 绑定一次事件
+
+
+对象拷贝，浅拷贝把原来对象里面的复杂数据类型地址拷贝给目标对象，修改目标对象会影响被拷贝对象；深拷贝完全克隆（拷贝的对象，而不是地址），修改目标对象不会影响拷贝对象 如果里面没有冲突的属性，会合并到一起
+$.extend([deep],target,object1,[objectN])，会覆盖原来的数据 深拷贝不会覆盖里面的数据（共存）
+deep:如果设为true为深拷贝，默认为浅拷贝
+target：要拷贝的目标对象
+object1：待拷贝到第一个对象的对象
+
+
+多库共存解决方案
+$=jQuery
+1、统一把$符号改成jQuery
+2、jQuery变量规定新的名称：$.noConflict(),用户自己定义原来的$ 例如 let a = $.noConflict()；那么a就相当于原来的$
+
+
+jQuery插件
+1、插件库：http://www.jq22.com/
+2、jQuery之家：http://www.htmleaf.com/
+
+Node.js（ESMScript+Node模块API） 
+官网：http://nodejs.org/en/
+LTS稳定版
+下载.msi
+
+命令行工具
+node -v 查看当前node的安装版本
+
+模块化开发
+JS存在的问题
+1、文件依赖
+2、命名冲突
+node.js规定 一个JS文件就是一个模块，模块内部定义的变量和函数默认情况下外部无法得到
+exports 是一个对象，进行成员导出
+require()导入其它模块,导入模块时，模块后缀可以不写
+module.exports 另外一种方式对导出，最终以这个为准
+[]代表可选参数
+gulp
+1、转换代码
+2、压缩代码
+3、复制文件夹
+
+模板引擎语法
+条件
+{{if条件}}...{{/if}}
+{{if v1}}...{else if v2}...{{/if}}
+循环
+{{each 数据}}{{$index}}{{$value}}{{/each}}   $value 就是循环数据中的值 $index表示索引
+子模板
+{{include "模板"}}
+
+Ajax
+1、创建Ajax对象
+let xhr = new XMLHttpRequest()
+2、告诉Ajax请求地址以及请求方式
+xhr.open("get","地址")
+3、发送请求
+xhr.send()
+4、获取服务端与客户端的响应数据
+xhr.onload  = function(){
+   console.log(xhr.rsponseText)
+}
+
+请求参数的格式
+1、application/x-www-form-urlencoded
+2、application/json
+
+get请求是不能提交json对象数据格式的，传统网站的表单提交也是不支持json对象数据格式的
+
+Express框架
+Express是一个基于Node平台的web应用框架，它提供了一系列强大的特性，帮主你创建各种Web应用。
+我们可以使用npm install express命令进项下载
+框架特性
+1、提供方便简洁的路由方式
+2、对获取http请求参数进行简化处理
+3、对模板引擎支持度提高，方便渲染动态HTML页面
+4、提供了中间件机制有效控制HTTP请求
+5、拥有大量第三方中间件对功能进行扩展
+
+//引入框架
+const express = require("express");
+//创建网站服务器
+const app = express();
+app.get("/",(req,res)=>{
+	//send()
+	//1、send方法内部会检测响应内容的类型
+	//2、send方法会自动设置http状态码
+	//3、send放法会帮我们自动设置响应的内容类型及编码
+    res.status(404)//可以设置状态码 可以链式操作
+    res.send("hellow express")
+})
+//监听窗口
+app.listen(3000);
+console.log("网站服务器启动成功")
+
+启动服务器 node + 文件名
+nodemon + 文件名 nodemon优点：文件修改之后会自动重新执行这个文件  Ctrl+c可以打断命令执行
+
+中间件，有一个next参数 可以传递给下一个中间件处理
+中间件是一堆方法，可以接收客户端发来的请求，可以请求作出响应，也可以请求继续交给下一个中间件继续处理。
+app.get（）接受get请求
+app.post()接收post请求
+app.use()接收所有请求 第一个参数也可以传入请求地址，代表无论什么请求方式，只要是这个请求地址就接收这个请求
+
+错误处理中间件 集中处理错误的地方 四个参数
+同步代码
+app.get("/index",(req,res)=>{
+	throw new Error("程序发生了未知错误") //错误对象里面有message属性
+})
+app.use((err,req.res,next)=>{
+	res.statu.(500).send(err.message)// 500代表服务端发生错误
+})
+异步代码 需要手动调用next()
+
+
+Ajax
+1、创建Ajax对象
+let xhr = new XMLHttpRequest();
+2、告诉Ajax请求地址以及请求方式
+xhr.open("get","地址")
+3、发送请求
+xhr.send()
+4、获取服务器给客户端的响应数据
+xhr.onload = function(){
+	//在这里可以添加判断状态码
+	console.log(xhr.responseText)
+}
+
+FromDate对象（不能用get）
+//将普通的html表单转换为表单对象
+let formData = new FormData(from);
+xhr.send(formData)
+
+formData.get("key")获取表单对象属性值
+formData.set("key","value")设置表单对象属性值 如果表单属性不存在则会创建这个表单属性
+formData.delete("key")删除表单对象中属性的值
+formData.append("key","value")向表单对象追加属性
+set方法和append方法的区别是，在属性名已经存在的情况下，set会覆盖已经有的键名的值，而append会保留两个值（保留原有属性的值）
+
+get请求方式不能用于文件上传
+_dirname 找到当前文件所在的目录
+//将用户选择的文件追加到formDate表单对象中
+formData.append("attrname","this.files[0]")
+
+xhr.upload.onprogress = function(ev){      //在文件上传的过程中持续触发 ev为事件对象
+ 	//ev.loaded 代表文件上传了多少
+	//ev.total 代表文件的总大小
+	let result = (ev.loaded/ev.total)*100+100%
+	bar.style.width = result
+	bar.innerHTML = result
+} 
+
+FromDate图片预览功能
+onload图片加载时间
+req.query获得请求参数
+.后面不能接变量，要用[]
+
+jsonp可以解决非同源资源共享
+
+另外一种方式
+CORS跨域资源共享
+CORS：全称为Cross-origin resource sharing，即跨域资源共享，它允许浏览器向跨域服务器发送Ajax请求，客服Ajax只能同源使用的限制
+
+
+Ajax全局事件 一定要绑定在docunent上
+只要页面中Ajax请求被发送，对应的全局事件就会被触发
+.ajaxStart()//请求开始发送时触发
+.ajaxComplete()//请求完成时触发
+
+NProgress 插件需要下载然后引入CSS文件和JS文件
+纳米级进度条，使用逼真的动画来告诉用户正在发生的事情
+NProgress.start()//进度条开始运动
+NProgress.done()//进度条结束运动

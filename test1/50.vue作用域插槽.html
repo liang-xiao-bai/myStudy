@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <Test>
+            <template v-slot:header = 'slotProps'>
+                <p>{{slotProps}}</p>
+            </template>
+        </Test>
+    </div>
+    <script>
+        const Test = {
+            template:
+            `<div>
+                <p>我是有个子组件</p>
+                <p>{{msg}}</p>
+                <slot name="header" :newMsg='newMsg'></slot>
+                <slot name="header" :newMsgt='newMsgt'></slot>
+            </div>`,
+            data(){
+                return {
+                    msg:'子组件信息',
+                    newMsg:'想在父组件展示的信息',
+                    newMsgt:'想在父组件展示的第二条信息'
+                }
+            },
+        }
+        new Vue({
+            el:'#app',
+            data:{
+            },
+            components:{Test}
+        })
+    </script>
+</body>
+</html>

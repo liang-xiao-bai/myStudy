@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // var nextGreaterElement = function(nums1, nums2) {
+        //     let stack = []
+        //     nums1.forEach((item,index)=>{
+        //         let i = nums2.indexOf(item)
+        //         let flag = nums2.some((val,id)=>{
+        //             if(id>i){
+        //                 if(val>item){
+        //                     stack.push(val)
+        //                     return true
+        //                 }
+        //             }
+        //         })
+        //         if(!flag){
+        //             stack.push(-1)
+        //         }
+        //     })
+        //     return stack
+        // };
+        // let nums1 = [2,4]
+        // let nums2 = [1,2,3,4]
+        // console.log(nextGreaterElement(nums1,nums2))
+
+        var nextGreaterElement = function(nums1, nums2) {
+            let stack = []
+            nums2.forEach((item,index)=>{
+                stack.push(nums1[index])
+                if(stack[stack.length-1] === item){}
+            })
+            return stack
+        };
+        let nums1 = [2,4]
+        let nums2 = [1,2,3,4]
+        console.log(nextGreaterElement(nums1,nums2))
+    </script>
+</body>
+</html>

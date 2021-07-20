@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Person{
+            constructor(name,age){
+                this.name = name
+                this.age = age
+            }
+            static init(name,age){
+                // return new Person(name,age)
+                console.log(this,'init')
+            }
+            getVue(){
+                // console.log('getVuegetVuegetVue')
+                this.getVue2()
+            }
+            getVue2(){
+                console.log('value22222')
+            }
+        }
+        let lisi = new Person('lisi',18)
+        // let lisi = Person.init('lisi',18)
+        // console.log(lisi)
+        lisi.getVue()
+        Person.init()
+    </script>
+</body>
+</html>

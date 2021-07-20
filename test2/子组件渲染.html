@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            {{msg}}
+            <son :value='value' @postParent='postParent'></son>
+            <button @click='getParent'>父组件</button>
+        </div>
+    </div>
+    <script>
+        const son = {
+            template: `
+                <div>
+                    <p>我是子组件</p>
+                    <button @click='getSon'>点击</button>
+                </div>
+            `,
+            created(){
+                console.log(2)
+            },
+            props:['value'],
+            methods:{
+                getSon(){
+                    this.$emit('postParent')
+                }
+            }
+        }
+        new Vue({
+            el: '#app',
+            data: {
+                msg: '模板',
+                value:''
+
+            },
+            created(){
+                setTimeout(()=>{
+                    this.value = {
+                        a:{
+                            b:1
+                        }
+                    }
+                },3000)
+                console.log(1)
+            },
+            methods: {
+                getParent(){
+                    console.log(this)
+                },
+                postParent(){
+                    console.log('获取子组件')
+                }
+            },
+            components:{
+                son
+            }
+        })
+    </script>
+</body>
+
+</html>

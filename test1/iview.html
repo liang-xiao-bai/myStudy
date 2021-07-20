@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/view-design/dist/styles/iview.css">
+    <script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
+    <script type="text/javascript" src="http://unpkg.com/view-design/dist/iview.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <i-menu :theme="theme2">
+            <Submenu name="1">
+                <template slot="title">
+                    <Icon type="ios-paper" />
+                    内容管理
+                </template>
+                <Menu-Item name="1-1">文章管理</Menu-Item >
+                <Menu-Item  name="1-2">评论管理</Menu-Item >
+                <Menu-Item  name="1-3">举报管理</Menu-Item >
+            </Submenu>
+            <Submenu name="2">
+                <template slot="title">
+                    <Icon type="ios-people" />
+                    用户管理
+                </template>
+                <Menu-Item  name="2-1">新增用户</Menu-Item >
+                <Menu-Item  name="2-2">活跃用户</Menu-Item >
+            </Submenu>
+            <Submenu name="3">
+                <template slot="title">
+                    <Icon type="ios-stats" />
+                    统计分析
+                </template>
+                <Menu-Group title="使用">
+                    <Menu-Item  name="3-1">新增和启动</Menu-Item >
+                    <Menu-Item  name="3-2">活跃分析</Menu-Item >
+                    <Menu-Item  name="3-3">时段分析</Menu-Item >
+                </Menu-Group>
+                <Menu-Group title="留存">
+                    <Menu-Item  name="3-4">用户留存</Menu-Item >
+                    <Menu-Item  name="3-5">流失用户</Menu-Item >
+                </Menu-Group>
+            </Submenu>
+        </i-menu>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                theme2: 'light'
+            }
+        })
+    </script>
+</body>
+</html>

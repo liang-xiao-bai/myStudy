@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+			*{
+				/*设置通用样式*/
+				padding: 0;
+				margin: 0;
+			}
+			.nav{
+				width: 100%;
+				height:40px;
+				margin-top: 300px;
+				background-color:#000000;
+			}
+			.nav>ul{
+				/*子元素选择器（>号）设置第一导航栏样式*/
+				width: 700px;
+				height:40px;
+				margin:0px auto;
+			}
+			.nav>ul>li{
+				float: left;/*设置li浮动*/
+				width: 110px;
+				height:100%;
+				list-style: none;/*取消li符号*/
+				margin-right: 50px;/*设置每个li的右外边距*/
+			}
+			.nav>ul>li:hover{
+				/*给li设置鼠标划入背景颜色*/
+				background-color:orange;
+			}
+			.nav>ul>li a{
+				/*设置a链接样式*/
+				color: #FFFFFF;
+				font-weight: bold;
+				line-height: 40px;
+				margin-left: 30px;
+				text-decoration: none;/*取消a链接下划线*/
+			}
+			.nav>ul>li:hover .son{
+				/*鼠标划入li时显示第二列表*/
+				display: block;
+				background-color:orange;
+				animation:move 0.5s 0s;/*设置划入导航栏下拉的动画效果*/
+			}
+			@keyframes move{
+				/*设置animation动画参数*/
+				0%{
+					/*动画开始时*/
+					height:0px;
+				}
+				100%{
+					/*动画结束时*/
+					height: 120px;
+				}
+			}
+			.son{
+				/*设置第二导航栏样式*/
+				list-style: none;
+				display: none;/*隐藏第二列表*/
+				text-align: left;
+			}
+			.son li:hover{
+				/*当鼠标划入时将第li背景颜色设为红色*/
+				background-color: red;
+			}
+
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <ul>
+            <li>
+                <a href="#">奥利给</a>
+                <ul class="son">
+                    <li><a href="#">雷霆嘎巴</a></li>
+                    <li><a href="#">哈拉少</a></li>
+                    <li><a href="#">Giao</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">吃惊</a>
+                <ul class="son">
+                    <li><a href="#">我的天</a></li>
+                    <li><a href="#">假的吧</a></li>
+                    <li><a href="#">嘻嘻</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">卧槽</a>
+                <ul class="son">
+                    <li><a href="#">哈哈</a></li>
+                    <li><a href="#">无情</a></li>
+                    <li><a href="#">哈喽</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">有趣</a>
+                <ul class="son">
+                    <li><a href="#">做梦</a></li>
+                    <li><a href="#">想你</a></li>
+                    <li><a href="#">每一天</a></li>
+                </ul>
+            </li>
+            
+    </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8">
+	<title>分享</title>
+	<style type="text/css">
+	  *{
+	    margin: 0;
+		padding: 0;
+	  }
+	  .box{
+		position: absolute;
+		width: 100px;
+		height: 400px;
+		background: green;
+		left: -100px;
+		top: 50%;
+		margin-top:-200px;
+		text-align: center;
+		font-size: 20px;
+		color: #fff;
+		line-height: 400px;
+	  }
+	  .box-share{
+		position: absolute;
+		height: 40px;
+		width: 20px;
+		background: red;
+		right: -20px;
+		top: 50%;
+		margin-top: -25px;
+		color: #000;
+		font-size: 16px;
+		text-align: center;
+		line-height: 20px;
+		padding: 5px 0;
+		border-radius: 0 10px 10px 0;
+	  }
+	</style>
+	<script type="text/javascript">
+	  window.onload = function () {
+		let box = document.getElementsByClassName('box')[0];
+		box.onmouseover = () => {
+		  startMove(0)
+		}
+		box.onmouseout = () => {
+		  startMove(-100)
+		}
+	  }
+	  let timer = null
+	  let startMove = iTarget => {
+	    let box = document.getElementsByClassName('box')[0]
+		clearInterval(timer)
+		timer = setInterval(() => {
+		  let speed = (iTarget - box.offsetLeft)/15
+		  speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed)
+		  if (box.offsetLeft == iTarget) {
+			clearInterval(timer)
+		  } else {
+			box.style.left = box.offsetLeft + speed + 'px'
+		  }
+		}, 30)
+	  }
+	</script>
+  </head>
+  <body>
+	<div class="box">
+	  box内容
+	  <div class="box-share">分享</div>
+	</div>
+  </body>
+</html>
+

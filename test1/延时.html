@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .dianji{
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="dianji" @click='fnEvent'></div>
+    </div>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                it:'1'
+            },
+            methods:{
+                fnEvent:function() {
+                    console.log('点击')
+                    let that = this
+                    this.go().then(function(res){
+                        console.log(that.it)
+                    })
+                },
+                go:function(){
+                    let that = this
+                    let p = new Promise(function(resolve,reject){
+                        setTimeout(function(){
+                            let it = '2'
+                            that.it = it 
+                            resolve('success')
+                        })
+                    })
+                    return p
+                }
+            }
+        })
+    </script>
+</body>
+</html>

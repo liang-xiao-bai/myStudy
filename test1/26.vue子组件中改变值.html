@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <new-app :arr='arr' :msg='msg'></new-app>
+        <span>{{msg}}</span>
+        <span>{{arr[0]}}</span>
+    </div>
+    <script>
+        const newApp = {
+            template: `
+                        <div>
+                            <button @click='fn1'>点击改变arr</button>
+                            <button @click='fn2'>点击改变msg</button>
+                        </div>
+                        `,
+            props:['arr','msg'],
+            methods:{
+                fn1(){
+                    // 之所以能改变数组里面的值是因为数组是一个引用对象，改变的只是对象的值，数组的值并没有发生改变
+                    this.arr.splice(0,1,6)    
+                    // this.arr[0] = 6
+                },
+                fn2(){
+                    this.msg = '我改变了'
+                }
+            }
+        }
+        new Vue({
+            el:'#app',
+            data:{
+                msg:'我成功了',
+                arr:[1,2,3,4,5,6]
+            },
+            components:{newApp},
+            computed:{
+                a(){
+                    return '我是a'
+                }
+            },
+            methods:{
+                fn(){
+                    this.checked = !this.checked
+                    console.log(this.checked)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

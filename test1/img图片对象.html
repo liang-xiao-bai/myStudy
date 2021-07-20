@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        img{
+            position: absolute;
+            height: 537px;
+        }
+        div{
+            position: relative;
+            height: 537px;
+        }
+        body{
+            /* overflow-x: hidden; */
+        }
+        .test_div{
+            width: 200px;
+            height: 200px;
+            background: pink;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="./img/test_img.png" alt="" class="test_img">
+    </div>
+    <div class="test_div">
+
+    </div>
+    <script>
+        let test_img = document.querySelector('.test_img')
+        let test_div = document.querySelector('.test_div')
+        // 图片地址
+        var img_url = './img/test_img.png'
+        // 创建对象
+        var img = new Image()
+        // 改变图片的src
+        img.src = img_url
+        // 加载完成执行
+        img.onload = function(){
+            // 打印
+            // 图片按比例缩小后宽度
+            let img_width = (text_img.offsetHeight/img.height)*img.width
+            let body_width = document.body.clientWidth
+            let difference = (img_width - body_width)/2
+            test_img.style.left = -difference + 'px'
+        }
+    </script>
+</body>
+</html>

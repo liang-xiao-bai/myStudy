@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <Test></Test>
+        <Test></Test>
+        <Test></Test>
+        <Test></Test>
+    </div>
+    <script>
+        const Test = {
+            template:`<div>我是一个子组件</div>`,
+            created(){
+                console.log('调用子组件')
+            }
+        }
+        new Vue({
+            el:'#app',
+            data:{},
+            components:{Test}
+        })
+    </script>
+</body>
+</html>

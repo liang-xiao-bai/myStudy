@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/view-design/dist/styles/iview.css">
+    <script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
+    <script type="text/javascript" src="http://unpkg.com/view-design/dist/iview.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <i-menu mode="horizontal" :theme="theme1" active-name="1">
+            <Menu-Item name="1">
+                <Icon type="ios-paper" />
+                内容管理
+            </Menu-Item>
+            <Menu-Item name="2">
+                <Icon type="ios-people" />
+                用户管理
+            </Menu-Item>
+            <Menu-Item name="3">
+                <Icon type="ios-paper"></Icon>时事新闻
+            </Menu-Item>
+        </i-menu>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                theme1: 'light'
+            }
+        })
+    </script>
+</body>
+</html>

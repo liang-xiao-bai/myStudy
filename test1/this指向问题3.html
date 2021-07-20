@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function foo(b) {
+            console.log(this)
+            console.log(this.a,b);
+        }
+        var obj = {
+            a:2
+        }
+        var bar = function () {
+            return foo.apply(obj,arguments);
+        }
+        bar(3);
+        // function fn(){
+        //     console.log(arguments)
+        // }
+        // fn(1,2,3,4,5)
+    </script>
+</body>
+</html>

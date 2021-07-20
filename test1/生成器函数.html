@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function *foo(){
+            const res = yield 'foo'
+            console.log(res)   //bar
+            yield 100
+
+        }
+        let generator = foo()
+        // 调用生成器加参数
+        generator.next('bar')
+        generator.next('bar')
+
+        // console.log(result.next('bar'))
+        // console.log(result.next())
+
+        // function *foo(){
+        //     console.log('foo')
+        //     return 100
+        // }
+        // let result = foo()
+        // console.log(result.next())
+    </script>
+</body>
+</html>

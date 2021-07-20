@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        模拟数据
+    </div>
+    <script>
+        let data = {
+            name: "lisi",
+            age: '18'
+        }
+        // 模拟Vue实例
+        let vm = {}
+
+        this.proxyData(data)
+
+        function proxyData(data) {
+            Object.keys(data).forEach(key => {
+                Object.defineProperty(vm, key, {
+                    enumerable: true,
+                    configurable: true,
+                    get() {
+                        return data[key]
+                    },
+                    set(newvalue) {
+                        if (newvalue === data[key]) {
+                            return
+                        }
+                        data[key] = newvalue
+                    }
+                })
+            })
+        }
+        vm.name = 'zhangsan'
+        vm.age = 20
+        console.log(vm.name)
+        console.log(vm.age)
+    </script>
+</body>
+
+</html>
